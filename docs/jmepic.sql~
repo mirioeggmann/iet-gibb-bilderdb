@@ -1,0 +1,18 @@
+﻿-- JMELab (c) 2016
+-- Create a database and a user for it.
+-- After that you have to change the    db name, 
+--					username,
+--					password 
+-- in the config file (/config.php).
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE  user (
+  id        INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  firstName VARCHAR(64)  NULL,
+  lastName  VARCHAR(64)  NULL,
+  email     VARCHAR(128) NOT NULL,
+  password  CHAR(60)  NOT NULL,
+  PRIMARY KEY  (id)
+);
+
+CREATE
