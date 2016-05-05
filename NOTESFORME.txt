@@ -1,3 +1,7 @@
+später lychez bereitstellen lychez.io und für uns zuhaus
+
+photos.jmelab.ch benutzen oder so.
+
 Maybe add a Controller class and extend from it...
 
 add by picture:
@@ -7,8 +11,13 @@ but safe date, where it was taken, gps data, witdth picture, device that has tak
 not picture but photo
 
 gutes vorbild = google photos
+flicker auch gut anschauen, drag and drop etc.
 
 SUCHE EINBAUEN IN NAVIGATION, wie bei google photos + upload limit (max 1gb, capatcha or something like that, error handling + fehlermeldungsseiten + mvc lino + db andere)
+
+upload und fotos nicht trennen, sondern photos/upload
+
+in zweiter navi bar sonst auch noch sprache neben login etc. und sonst einfach weg lassen, und login bei untermenü machen etc.
 
 not gallerie but album - https://photos.google.com/?hl=de
 
