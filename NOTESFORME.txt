@@ -3,3 +3,13 @@ Maybe add a Controller class and extend from it...
 db
 bei db noch beschreibung und name optional ergänzen...
 vermutlich grösse von bild nicht fest rein speichern.
+
+<nav>
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a href="#!" class="breadcrumb">First</a>
+        <a href="#!" class="breadcrumb">Second</a>
+        <a href="#!" class="breadcrumb">Third</a>
+      </div>
+    </div>
+  </nav>
