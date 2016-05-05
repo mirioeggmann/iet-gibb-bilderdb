@@ -8,7 +8,7 @@ not picture but photo
 
 gutes vorbild = google photos
 
-SUCHE EINBAUEN IN NAVIGATION, wie bei google photos
+SUCHE EINBAUEN IN NAVIGATION, wie bei google photos + upload limit (max 1gb, capatcha or something like that, error handling + fehlermeldungsseiten + mvc lino + db andere)
 
 not gallerie but album - https://photos.google.com/?hl=de
 
