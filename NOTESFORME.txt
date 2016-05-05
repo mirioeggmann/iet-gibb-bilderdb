@@ -8,6 +8,8 @@ not picture but photo
 
 gutes vorbild = google photos
 
+SUCHE EINBAUEN IN NAVIGATION, wie bei google photos
+
 not gallerie but album - https://photos.google.com/?hl=de
 
 bei bild alleine hinzufügen wie bei google pictures kleine symbole als header
