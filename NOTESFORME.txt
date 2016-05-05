@@ -1,6 +1,12 @@
 Maybe add a Controller class and extend from it...
 
-not gaööerie but album - https://photos.google.com/?hl=de
+add by picture:
+not safe with of the thumbnail in db
+but safe date, where it was taken, gps data, witdth picture, device that has taken, grösse kilobite, beschreibung (optional),
+
+not picture but photo
+
+not gallerie but album - https://photos.google.com/?hl=de
 
 db
 bei db noch beschreibung und name optional ergänzen...
