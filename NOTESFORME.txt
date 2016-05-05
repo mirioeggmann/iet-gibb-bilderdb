@@ -25,6 +25,7 @@ bei bild alleine hinzufügen wie bei google pictures kleine symbole als header
 
 bei standard ansicht 2 navigationen, eine kleine, die verschwindet und schwarz ist und  eine die fix bleibt und in der entsprechenden theme farbe.
 
+slideshow etc on homescreen (select which to play)
 db
 bei db noch beschreibung und name optional ergänzen...
 vermutlich grösse von bild nicht fest rein speichern.
