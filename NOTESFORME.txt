@@ -1,5 +1,7 @@
 Maybe add a Controller class and extend from it...
 
+not gaööerie but album - https://photos.google.com/?hl=de
+
 db
 bei db noch beschreibung und name optional ergänzen...
 vermutlich grösse von bild nicht fest rein speichern.
