@@ -3,12 +3,14 @@
 
 This is a picture website framework I created as a school project.
 
+## Contact
+Mirio Eggmann
+mirio.eggmann@protonmail.ch
+
 ## Getting started:
 
 ## Licence
 
 
-Mirio Eggmann
-GIBB 
+GIBB Modul 151
 4. Semester (2016)
-Modul 151
