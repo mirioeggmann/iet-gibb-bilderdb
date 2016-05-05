@@ -1,6 +1,14 @@
 [Lychez](https://lychez.jmelab.ch)
 =======
 
-This is a photo website framework I created as a school project.
+This is a picture website framework I created as a school project.
 
-GIBB 2016 4. Semester - Modul 151
+## Getting started:
+
+## Licence
+
+
+Mirio Eggmann
+GIBB 
+4. Semester (2016)
+Modul 151
