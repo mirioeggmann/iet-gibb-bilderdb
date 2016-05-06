@@ -9,7 +9,7 @@ class View
     {
     	$this->properties = $properties;
 
-    	$viewfile = "./view/$viewfile.php";
+    	$viewfile = "./views/$viewfile.php";
     	if (file_exists($viewfile)) {
 	       $this->viewfile = $viewfile;
 	    }

@@ -6,11 +6,11 @@ class Dispatcher
 	{
 		$url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
-		$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'DefaultController';
+		$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'HomeController';
 		$method         = !empty($url[1]) ? $url[1] : 'index';
         $args           = array_slice($url, 2);
 
-		require_once ("controller/$controllerName.php");
+		require_once ("controllers/$controllerName.php");
 		$controller = new $controllerName();
 
         call_user_func_array(array($controller, $method), $args);

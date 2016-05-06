@@ -1,16 +1,27 @@
 ﻿
 -- JMELab (c) 2016
--- Create a database and a user for it.
 -- After that you have to change the    db name, 
 --                                      username,
 --                                      password 
 -- in the config file (/config.php).gallery
 
+
+--
+-- Create and use database
+--
+
+CREATE DATABASE IF NOT EXISTS lynchez DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE lychez;
+
+--
+-- Create tables
+--
+
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
   id        INT NOT NULL AUTO_INCREMENT,
-  firstName VARCHAR(64)  NULL,
-  lastName  VARCHAR(64)  NULL,
+  firstName VARCHAR(50)  NULL,
+  lastName  VARCHAR(50)  NULL,
   userName  VARCHAR(64) NOT NULL,
   email     VARCHAR(128) NOT NULL,
   password  CHAR(60)  NOT NULL,
@@ -28,14 +39,12 @@ CREATE TABLE gallery (
 DROP TABLE IF EXISTS picture;
 CREATE TABLE picture (
   id			INT NOT NULL AUTO_INCREMENT,
-  original		VARCHAR(64) NOT NULL,
-  thumbnail 		VARCHAR(70) NOT NULL,
+  original		VARCHAR(128) NOT NULL,
+  thumbnail 		VARCHAR(128) NOT NULL,
   height_original	INT NOT NULL,
   width_original	INT NOT NULL,
-  size_original		INT NOT NULL,
   height_thumbnail	INT NOT NULL,
   width_thumbnail	INT NOT NULL,
-  size_thumbnail	INT NOT NULL,
   date  		DATETIME,
   gallery_id		INT NOT NULL,
   PRIMARY KEY (id),

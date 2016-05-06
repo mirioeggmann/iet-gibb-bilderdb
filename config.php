@@ -3,8 +3,8 @@
 return array(
     'database' => array(
         'host'     => 'localhost',
-        'username' => 'jmepic',
+        'username' => 'lychez',
         'password' => 'JMELab:443',
-        'database' => 'jmepic',
+        'database' => 'lychez',
     ),
 );

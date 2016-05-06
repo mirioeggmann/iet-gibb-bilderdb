@@ -4,6 +4,8 @@ photos.jmelab.ch benutzen oder so.
 
 Maybe add a Controller class and extend from it...
 
+Maybe make folders [header,main,footer] and outside header.php, main.php, footer.php. inside main all home_index.php etc. in header navigation and slidebar etc.
+
 add by picture:
 not safe with of the thumbnail in db
 but safe date, where it was taken, gps data, witdth picture, device that has taken, grösse kilobite, beschreibung (optional),
