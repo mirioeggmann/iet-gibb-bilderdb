@@ -12,7 +12,7 @@ class HomeController
 
 	public function index()
 	{
-		$view = new View('main_start', array("heading" => "Starter Template"));
+		$view = new View('main_start', array("heading" => "Home"));
 		$view->display();
 		$view = new View('home_index');
 		$view->display();

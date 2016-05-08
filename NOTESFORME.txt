@@ -12,6 +12,8 @@ but safe date, where it was taken, gps data, witdth picture, device that has tak
 
 not picture but photo
 
+maybe a second navbar.
+
 gutes vorbild = google photos
 flicker auch gut anschauen, drag and drop etc.
 
