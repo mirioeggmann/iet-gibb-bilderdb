@@ -3,7 +3,7 @@
 return array(
     'database' => array(
         'host'     => 'localhost',
-        'username' => 'lychez',
+        'username' => 'root',
         'password' => 'JMELab:443',
         'database' => 'lychez',
     ),

@@ -13,7 +13,6 @@ class LoginController
 	public function index()
 	{
     $email = (isset($_POST['email'])? $_POST['email'] : "");
-    $password = (isset($_POST['password'])? $_POST['password'] : "");
 
 		$view = new View('main_start', array("heading" => "Login"));
 		$view->display();

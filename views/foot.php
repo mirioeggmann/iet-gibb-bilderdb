@@ -1,6 +1,7 @@
 <!--  Scripts-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="/views/javascripts/materialize.js"></script>
+<script src="/views/javascripts/init.js"></script>
 
 <div class="hiddendiv common"></div>
 <div class="drag-target"
