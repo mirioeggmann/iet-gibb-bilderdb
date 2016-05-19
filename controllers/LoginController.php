@@ -34,12 +34,12 @@ class LoginController {
 					if (password_verify ( $formValues ['password'], $userModel->readPasswordByEmail ( $formValues ['email'] ) ) || password_verify ( $formValues ['password'], $userModel->readPasswordByUsername( $formValues ['email'] ) )) {
 						// Login the user.
 						session_start ();
-						$_SESSION ['userName'] = $formValues ['userName'];
+						$_SESSION ['userName'] = $formValues ['email'];
 						$_SESSION ['loggedIn'] = true;
 						
 						// Clear the Form fields.
 						$this->clearFormValues ();
-						header ( 'Location: /home' );
+						header ( 'Location: /user' );
 					} else {
 						header ( 'Location: /login' );
 					}

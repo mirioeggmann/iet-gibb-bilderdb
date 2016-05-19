@@ -56,7 +56,7 @@ class RegisterController {
 							
 							// Clear the Form fields.
 							$this->clearFormValues ();
-							header ( 'Location: /home' );
+							header ( 'Location: /user' );
 						} else {
 							header ( 'Location: /register' );
 						}

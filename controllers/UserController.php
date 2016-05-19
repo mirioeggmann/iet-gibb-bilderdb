@@ -20,10 +20,6 @@ class UserController
   		$view->display();
   		$view = new View('main_end');
   		$view->display();
-
-
-      
-      print_r($_SESSION);
     } else {
       header('Location: /home');
     }
