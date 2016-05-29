@@ -4,27 +4,27 @@ class HomeController
 {
 	public function __construct()
 	{
-		$view = new View('head',array("title" => "Home - lychez.ch"));
+		$view = new View('general/head',array("title" => "Home - lychez.ch"));
 		$view->display();
-		$view = new View('header');
+		$view = new View('general/header');
 		$view->display();
 	}
 
 	public function index()
 	{
-		$view = new View('main_start', array("heading" => "Home"));
+		$view = new View('general/main_start', array("heading" => "Home"));
 		$view->display();
-		$view = new View('home_index');
+		$view = new View('home/index');
 		$view->display();
-		$view = new View('main_end');
+		$view = new View('general/main_end');
 		$view->display();
 	}
 
 	public function __destruct()
 	{
-		$view = new View('footer');
+		$view = new View('general/footer');
 		$view->display();
-		$view = new View('foot');
+		$view = new View('general/foot');
 		$view->display();
 	}
 }

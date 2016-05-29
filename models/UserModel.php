@@ -2,6 +2,7 @@
 require_once ('libraries/Model.php');
 class UserModel extends Model {
 	protected $tableName = 'user';
+	
 	public function create($firstName, $lastName, $userName, $email, $password) {
 		$password = password_hash ( $password, PASSWORD_BCRYPT );
 		
@@ -13,6 +14,51 @@ class UserModel extends Model {
 		if (! $statement->execute ()) {
 			throw new Exception ( $statement->error );
 		}
+	}
+
+	public function readIdByUsername($userName) {
+		$query = "SELECT id FROM $this->tableName WHERE userName=?";
+		$statement = ConnectionHandler::getConnection ()->prepare ( $query );
+		$statement->bind_param ( 's', $userName );
+		$statement->execute ();
+		$result = $statement->get_result();
+
+		$row = $result->fetch_assoc();
+		$value = $row['id'];
+
+		$result->close();
+
+		return $value;
+	}
+
+	public function readIdByEmail($email) {
+		$query = "SELECT id FROM $this->tableName WHERE email=?";
+		$statement = ConnectionHandler::getConnection ()->prepare ( $query );
+		$statement->bind_param ( 's', $email );
+		$statement->execute ();
+		$result = $statement->get_result();
+
+		$row = $result->fetch_assoc();
+		$value = $row['id'];
+
+		$result->close();
+
+		return $value;
+	}
+
+	public function readUserNameById($id) {
+		$query = "SELECT userName FROM $this->tableName WHERE id=?";
+		$statement = ConnectionHandler::getConnection ()->prepare ( $query );
+		$statement->bind_param ( 's', $id );
+		$statement->execute ();
+		$result = $statement->get_result();
+
+		$row = $result->fetch_assoc();
+		$value = $row['userName'];
+
+		$result->close();
+
+		return $value;
 	}
 	
 	public function readPasswordByEmail($email) {

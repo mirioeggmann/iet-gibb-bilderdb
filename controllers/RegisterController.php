@@ -1,32 +1,45 @@
 <?php
 require_once ('models/UserModel.php');
+
 class RegisterController {
+	
 	public function __construct() {
-		$view = new View ( 'head', array (
+		$view = new View ( 'general/head', array (
 				"title" => "Register - lychez.ch" 
 		) );
 		$view->display ();
-		$view = new View ( 'header' );
+		$view = new View ( 'general/header' );
 		$view->display ();
 	}
+	
 	public function index() {
-		// Get the values of the Form.
-		$formValues = $this->getFormValues ();
-		
-		$view = new View ( 'main_start', array (
-				"heading" => "Register" 
-		) );
-		$view->display ();
-		$view = new View ( 'register_index', array (
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+
+		if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']) {
+			// Get the values of the Form.
+			$formValues = $this->getFormValues();
+
+			$view = new View ('general/main_start', array(
+				"heading" => "Register"
+			));
+			$view->display();
+			$view = new View ('register/index', array(
 				"firstName" => $formValues ['firstName'],
 				"lastName" => $formValues ['lastName'],
 				"userName" => $formValues ['userName'],
-				"email" => $formValues ['email'] 
-		) );
-		$view->display ();
-		$view = new View ( 'main_end' );
-		$view->display ();
+				"email" => $formValues ['email']
+			));
+			$view->display();
+			$view = new View ('general/main_end');
+			$view->display();
+		} else {
+			header ( 'Location: /home' );
+		}
 	}
+	
+	
 	public function doRegister() {
 		// Check if the submit button of the register form was pressed.
 		if (isset ( $_POST ['register'] )) {
@@ -48,7 +61,12 @@ class RegisterController {
 						if ($formValues ['password'] == $formValues ['password2']) {
 							// Insert the new user in the db.
 							$userModel->create ( $formValues ['firstName'], $formValues ['lastName'], $formValues ['userName'], $formValues ['email'], $formValues ['password'] );
-							
+							$id = $userModel->readIdByUsername($formValues['userName']);
+							if (!file_exists('./userHomes/'.$formValues ['userName'])) {
+								mkdir('./userHomes/'.$id.'/photos', 0777, true);
+								mkdir('./userHomes/'.$id.'/thumbnails', 0777, true);
+							}
+
 							// Login the user.
 							session_start ();
 							$_SESSION ['userName'] = $formValues ['userName'];
@@ -73,6 +91,7 @@ class RegisterController {
 			header ( 'Location: /register' );
 		}
 	}
+	
 	private function getFormValues() {
 		$values = array (
 				'firstName' => (isset ( $_POST ['firstName'] ) ? $_POST ['firstName'] : ""),
@@ -84,6 +103,7 @@ class RegisterController {
 		);
 		return $values;
 	}
+	
 	private function clearFormValues() {
 		$POST ['firstName'] = "";
 		$POST ['lastName'] = "";
@@ -92,6 +112,7 @@ class RegisterController {
 		$POST ['password'] = "";
 		$POST ['password2'] = "";
 	}
+	
 	private function isFieldValid($regex, $value) {
 		if (preg_match ( $regex, $value )) {
 			return true;
@@ -99,10 +120,11 @@ class RegisterController {
 			return false;
 		}
 	}
+	
 	public function __destruct() {
-		$view = new View ( 'footer' );
+		$view = new View ( 'general/footer' );
 		$view->display ();
-		$view = new View ( 'foot' );
+		$view = new View ( 'general/foot' );
 		$view->display ();
 	}
 }

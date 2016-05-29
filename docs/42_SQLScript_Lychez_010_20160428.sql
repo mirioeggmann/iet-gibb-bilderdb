@@ -1,9 +1,8 @@
-﻿-- JMELab
+-- JMELab
 USE lychez;
 
 DROP TABLE IF EXISTS photo_album;
 DROP TABLE IF EXISTS photo_tag;
-DROP TABLE IF EXISTS user_album;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS photo;
 DROP TABLE IF EXISTS album;
@@ -26,7 +25,10 @@ CREATE TABLE user (
 CREATE TABLE album (
   id		INT                 NOT NULL      AUTO_INCREMENT,
   name		VARCHAR(64)       NOT NULL,
-  PRIMARY KEY (id)
+  isShared	BOOLEAN				NOT NULL,
+  user_id	      INT           NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE photo (
@@ -37,10 +39,11 @@ CREATE TABLE photo (
   width 	      INT           NOT NULL,
   size          INT           NOT NULL,
   date  	      DATETIME      NULL,
+  title			VARCHAR(45)		NULL,
   description   VARCHAR(500)  NULL,
   user_id	      INT           NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id)
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tag (
@@ -49,23 +52,13 @@ CREATE TABLE tag (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE user_album (
-  id		        INT           NOT NULL      AUTO_INCREMENT,
-  user_id	      INT           NOT NULL,
-  album_id   	  INT           NOT NULL,
-  role          VARCHAR(45)   NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES user(id),
-  FOREIGN KEY (album_id) REFERENCES album(id)
-);
-
 CREATE TABLE photo_album (
   id		        INT           NOT NULL      AUTO_INCREMENT,
   photo_id      INT           NOT NULL,
   album_id   	  INT           NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (photo_id) REFERENCES photo(id),
-  FOREIGN KEY (album_id) REFERENCES album(id)
+  FOREIGN KEY (photo_id) REFERENCES photo(id) ON DELETE CASCADE,
+  FOREIGN KEY (album_id) REFERENCES album(id) ON DELETE CASCADE
 );
 
 CREATE TABLE photo_tag (
@@ -73,6 +66,6 @@ CREATE TABLE photo_tag (
   photo_id   	  INT           NOT NULL,
   tag_id	      INT           NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (photo_id) REFERENCES photo(id),
+  FOREIGN KEY (photo_id) REFERENCES photo(id) ON DELETE CASCADE,
   FOREIGN KEY (tag_id) REFERENCES tag(id)
 );
