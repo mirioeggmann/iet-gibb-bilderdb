@@ -34,4 +34,48 @@ class PhotoModel extends Model {
 
 		return $rows;
 	}
+	
+	public function updateTitleById($title, $id)
+	{
+		$query = "UPDATE $this->tableName SET title =? WHERE id=?";
+	
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $title, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
+	
+	public function updateDescriptionById($description, $id)
+	{
+		$query = "UPDATE $this->tableName SET description =? WHERE id=?";
+	
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $description, $id );
+	
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
+
+	public function readIsPhotoFromUser($id, $userId) {
+		$query = "SELECT user_id FROM $this->tableName WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare ( $query );
+		$statement->bind_param ( 'i', $id );
+		$statement->execute ();
+		$result = $statement->get_result();
+
+		$row = $result->fetch_assoc();
+		$value = $row['user_id'];
+
+		$result->close();
+
+		if ($value == $userId) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

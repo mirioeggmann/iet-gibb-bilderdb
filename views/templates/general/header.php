@@ -4,6 +4,7 @@
         <ul id="dropdown1" class="dropdown-content">
             <li>Logged in as <?php echo $_SESSION['userName']; ?></li>
             <li class="divider"></li>
+            <li><a href="/user/edit">Edit User</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
         <nav class="black" role="navigation">

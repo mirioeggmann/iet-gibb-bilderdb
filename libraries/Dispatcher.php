@@ -9,7 +9,7 @@ class Dispatcher
 									  	"Home" 			=> array("index"),
 									  	"Login"			=> array("index","doLogin"),
 										"Logout"		=> array("index","doLogout"),
-										"Photo"			=> array("index", "edit", "doEdit", "delete", "doDelete"),
+										"Photo"			=> array("index", "edit", "doEdit", "delete", "doDelete", "addTo", "doAddTo"),
 									  	"Photos"		=> array("index"),
 										"Register"		=> array("index","doRegister"),
 										"Search"		=> array("index"),

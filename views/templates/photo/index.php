@@ -9,6 +9,9 @@
         </div>
     </div>
     <div class="col s12 m4 l4">
+        <a href="../../photo/edit/<?php echo $photo->id; ?>" title="Edit photo"><i class="material-icons">edit</i></a>
+        <a href="../../photo/doDelete/<?php echo $photo->id; ?>" title="Delete photo"><i class="material-icons">delete</i></a>
+        <a href="../../photo/addTo/<?php echo $photo->id; ?>" title="Add photo to album"><i class="material-icons">add_to_photos</i></a>
         <p>Title: <?php echo $photo->title; ?></p>
         <p>Type: <?php echo $photo->type; ?></p>
         <p>Description: <?php echo $photo->description; ?></p>
@@ -17,7 +20,7 @@
         <p>Upload Date: <?php echo $photo->date; ?></p>
         <p>Tags:</p>
         <div class="chip">
-            Tag1
+            <?php echo $tags; ?>
         </div>
     </div>
 </div>

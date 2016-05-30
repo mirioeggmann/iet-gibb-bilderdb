@@ -16,6 +16,27 @@ class UserModel extends Model {
 		}
 	}
 
+	public function readAllByUserId($id)
+	{
+		$query = "SELECT * FROM $this->tableName WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'i', $id );
+		$statement->execute();
+
+		$result = $statement->get_result();
+		if (!$result) {
+			throw new Exception($statement->error);
+		}
+
+		$rows = array();
+		while ($row = $result->fetch_object()) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
+
 	public function readIdByUsername($userName) {
 		$query = "SELECT id FROM $this->tableName WHERE userName=?";
 		$statement = ConnectionHandler::getConnection ()->prepare ( $query );
@@ -132,6 +153,54 @@ class UserModel extends Model {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public function updateFirstNameById($firstName, $id)
+	{
+		$query = "UPDATE $this->tableName SET firstName =? WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $firstName, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
+
+	public function updateLastNameById($lastName, $id)
+	{
+		$query = "UPDATE $this->tableName SET lastName =? WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $lastName, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
+
+	public function updateEmailById($email, $id)
+	{
+		$query = "UPDATE $this->tableName SET email =? WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $email, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
+
+	public function updateUserNameById($userName, $id)
+	{
+		$query = "UPDATE $this->tableName SET userName =? WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $userName, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
 		}
 	}
 }

@@ -5,7 +5,7 @@
 					<h2 class="center light-blue-text">
 						<i class="material-icons">flash_on</i>
 					</h2>
-					<h5 class="center">Test1</h5>
+					<h5 class="center">Modul151</h5>
 
 					<p class="light">We did most of the heavy lifting for you to
 						provide a default stylings that incorporate our custom components.
@@ -19,7 +19,7 @@
 					<h2 class="center light-blue-text">
 						<i class="material-icons">group</i>
 					</h2>
-					<h5 class="center">Test2</h5>
+					<h5 class="center">Mirio Eggmann</h5>
 
 					<p class="light">By utilizing elements and principles of Material
 						Design, we were able to create a framework that incorporates
@@ -34,7 +34,7 @@
 					<h2 class="center light-blue-text">
 						<i class="material-icons">settings</i>
 					</h2>
-					<h5 class="center">Test3</h5>
+					<h5 class="center">Gibb</h5>
 
 					<p class="light">We have provided detailed documentation as well as
 						specific code examples to help new users get started. We are also
