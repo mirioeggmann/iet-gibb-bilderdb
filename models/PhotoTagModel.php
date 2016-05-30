@@ -35,7 +35,7 @@ class PhotoTagModel extends Model
 
     public function readAllTagsByPhotoId($photoId)
     {
-        $query = "SELECT tagModel.name AS name FROM $this->tableName JOIN tag ON photo_tag.tag_id=tag.id WHERE photo_id=?";
+        $query = "SELECT tag.name AS name FROM $this->tableName JOIN tag ON tag.id=photo_tag.tag_id AND photo_id=?";
 
         $statement = ConnectionHandler::getConnection ()->prepare($query);
         $statement->bind_param ( 'i', $photoId );

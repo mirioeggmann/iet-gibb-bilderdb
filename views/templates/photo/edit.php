@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="tags" name="tags" type="text" class="validate"><?php echo $tags; ?></input>
+                <input value="<?php echo $tags; ?>" id="tags" name="tags" type="text" class="validate">
                 <label for="tags">Tags</label>
             </div>
         </div>

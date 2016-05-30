@@ -29,7 +29,7 @@ class PhotoController
             $photo = $photoModel->readById($id);
             $tags = "";
             foreach($photoTagModel->readAllTagsByPhotoId($id) as $tag) {
-                $tags = $tags . ', '. $tag->name;
+                $tags = $tags . $tag->name . ', ';
             }
 
             if (true) {
@@ -54,13 +54,19 @@ class PhotoController
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
+            $photoTagModel = new PhotoTagModel();
 
             if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
                 $photo = $photoModel->readById($id);
 
+                $tags = "";
+                foreach($photoTagModel->readAllTagsByPhotoId($id) as $tag) {
+                    $tags = $tags . $tag->name . ', ';
+                }
+
                 $view = new View('general/main_start', array("heading" => "Photo"));
                 $view->display();
-                $view = new View('photo/edit', array("photo" => $photo, "tags" => ""));
+                $view = new View('photo/edit', array("photo" => $photo, "tags" => $tags));
                 $view->display();
                 $view = new View('general/main_end');
                 $view->display();

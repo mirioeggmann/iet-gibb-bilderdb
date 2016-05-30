@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89942452-0cfe-4e4a-85ae-d440f20a7486" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/FileSystemHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/PhotoTagModel.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/TagModel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/PhotoController.php" afterPath="$PROJECT_DIR$/controllers/PhotoController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/UserController.php" afterPath="$PROJECT_DIR$/controllers/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/Dispatcher.php" afterPath="$PROJECT_DIR$/libraries/Dispatcher.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/PhotoModel.php" afterPath="$PROJECT_DIR$/models/PhotoModel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/UserModel.php" afterPath="$PROJECT_DIR$/models/UserModel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/templates/general/header.php" afterPath="$PROJECT_DIR$/views/templates/general/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/templates/home/index.php" afterPath="$PROJECT_DIR$/views/templates/home/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/PhotoTagModel.php" afterPath="$PROJECT_DIR$/models/PhotoTagModel.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/templates/photo/edit.php" afterPath="$PROJECT_DIR$/views/templates/photo/edit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/templates/photo/index.php" afterPath="$PROJECT_DIR$/views/templates/photo/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/templates/user/edit.php" afterPath="$PROJECT_DIR$/views/templates/user/edit.php" />
     </list>
     <ignored path="lychez.ch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,8 +29,8 @@
       <file leaf-file-name="edit.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/templates/photo/edit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+            <state relative-caret-position="75">
+              <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -50,8 +39,8 @@
       <file leaf-file-name="PhotoModel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/PhotoModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+            <state relative-caret-position="300">
+              <caret line="20" column="38" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="38" />
               <folding>
                 <marker date="1464557457565" expanded="true" signature="236:368" ph="INSERT INTO ${$this-&gt;tableName}... " />
                 <marker date="1464557457565" expanded="true" signature="708:754" ph="SELECT * FRO... ${$this-&gt;tableName}" />
@@ -107,26 +96,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/PhotoController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+            <state relative-caret-position="344">
+              <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotoTagModel.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PhotoTagModel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/PhotoTagModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="57" selection-start-line="37" selection-start-column="57" selection-end-line="37" selection-end-column="57" />
+            <state relative-caret-position="150">
+              <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
               <folding>
-                <marker date="1464646357126" expanded="true" signature="190:251" ph="INSERT INTO ${$this-&gt;tableName}... " />
-                <marker date="1464646357126" expanded="true" signature="573:624" ph="SELECT * FRO... ${$this-&gt;tableName}" />
-                <marker date="1464646357126" expanded="true" signature="573:633" ph="SELECT * FRO... ${$this-&gt;tableName}" />
-                <marker date="1464646357126" expanded="true" signature="1082:1185" ph="SELECT t.nam... ${$this-&gt;tableName}" />
+                <marker date="1464647193726" expanded="true" signature="190:251" ph="INSERT INTO ${$this-&gt;tableName}... " />
+                <marker date="1464647193726" expanded="true" signature="573:624" ph="SELECT * FRO... ${$this-&gt;tableName}" />
+                <marker date="1464647193726" expanded="true" signature="573:633" ph="SELECT * FRO... ${$this-&gt;tableName}" />
+                <marker date="1464647193726" expanded="true" signature="1082:1111" ph="SELECT tagMo... ${$this-&gt;tableName}" />
+                <marker date="1464647193726" expanded="true" signature="1082:1127" ph="SELECT tagMo... ${$this-&gt;tableName}" />
+                <marker date="1464647193726" expanded="true" signature="1082:1178" ph="SELECT tag.n... ${$this-&gt;tableName}" />
               </folding>
             </state>
           </provider>
@@ -179,12 +170,12 @@
         <option value="$PROJECT_DIR$/views/templates/user/edit.php" />
         <option value="$PROJECT_DIR$/views/templates/general/header.php" />
         <option value="$PROJECT_DIR$/controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/views/templates/photo/edit.php" />
         <option value="$PROJECT_DIR$/libraries/FileSystemHelper.php" />
         <option value="$PROJECT_DIR$/models/TagModel.php" />
         <option value="$PROJECT_DIR$/views/templates/photo/index.php" />
-        <option value="$PROJECT_DIR$/controllers/PhotoController.php" />
         <option value="$PROJECT_DIR$/models/PhotoTagModel.php" />
+        <option value="$PROJECT_DIR$/views/templates/photo/edit.php" />
+        <option value="$PROJECT_DIR$/controllers/PhotoController.php" />
       </list>
     </option>
   </component>
@@ -554,16 +545,16 @@
       <workItem from="1464425359569" duration="44962000" />
       <workItem from="1464552042989" duration="7474000" />
       <workItem from="1464617983583" duration="690000" />
-      <workItem from="1464635458695" duration="10897000" />
+      <workItem from="1464635458695" duration="12068000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64023000" />
+    <option name="totallyTimeSpent" value="65194000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1038" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24743935" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -938,10 +929,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/templates/photo/edit.php">
+    <entry file="file://$PROJECT_DIR$/libraries/FileSystemHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/templates/photos/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/templates/general/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="14" column="110" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/TagModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+          <folding>
+            <marker date="1464644570418" expanded="true" signature="168:214" ph="INSERT INTO ${$this-&gt;tableName}... " />
+            <marker date="1464644570418" expanded="true" signature="505:549" ph="SELECT id FR... ${$this-&gt;tableName}" />
+            <marker date="1464644570418" expanded="true" signature="943:986" ph="SELECT * FRO... ${$this-&gt;tableName}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/PhotoTagModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+          <folding>
+            <marker date="1464647193726" expanded="true" signature="190:251" ph="INSERT INTO ${$this-&gt;tableName}... " />
+            <marker date="1464647193726" expanded="true" signature="573:624" ph="SELECT * FRO... ${$this-&gt;tableName}" />
+            <marker date="1464647193726" expanded="true" signature="573:633" ph="SELECT * FRO... ${$this-&gt;tableName}" />
+            <marker date="1464647193726" expanded="true" signature="1082:1111" ph="SELECT tagMo... ${$this-&gt;tableName}" />
+            <marker date="1464647193726" expanded="true" signature="1082:1127" ph="SELECT tagMo... ${$this-&gt;tableName}" />
+            <marker date="1464647193726" expanded="true" signature="1082:1178" ph="SELECT tag.n... ${$this-&gt;tableName}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/templates/photo/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -968,10 +1010,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/templates/photo/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="86" selection-start-line="3" selection-start-column="86" selection-end-line="3" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/PhotoModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="35" selection-end-column="5" />
+        <state relative-caret-position="300">
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="38" />
           <folding>
             <marker date="1464557457565" expanded="true" signature="236:368" ph="INSERT INTO ${$this-&gt;tableName}... " />
             <marker date="1464557457565" expanded="true" signature="708:754" ph="SELECT * FRO... ${$this-&gt;tableName}" />
@@ -982,68 +1032,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/TagModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
-          <folding>
-            <marker date="1464644570418" expanded="true" signature="168:214" ph="INSERT INTO ${$this-&gt;tableName}... " />
-            <marker date="1464644570418" expanded="true" signature="505:549" ph="SELECT id FR... ${$this-&gt;tableName}" />
-            <marker date="1464644570418" expanded="true" signature="943:986" ph="SELECT * FRO... ${$this-&gt;tableName}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/FileSystemHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/templates/photos/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/templates/general/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="14" column="110" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="110" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/templates/photo/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="86" selection-start-line="3" selection-start-column="86" selection-end-line="3" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/PhotoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+        <state relative-caret-position="344">
+          <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/PhotoTagModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="57" selection-start-line="37" selection-start-column="57" selection-end-line="37" selection-end-column="57" />
-          <folding>
-            <marker date="1464646357126" expanded="true" signature="190:251" ph="INSERT INTO ${$this-&gt;tableName}... " />
-            <marker date="1464646357126" expanded="true" signature="573:624" ph="SELECT * FRO... ${$this-&gt;tableName}" />
-            <marker date="1464646357126" expanded="true" signature="573:633" ph="SELECT * FRO... ${$this-&gt;tableName}" />
-            <marker date="1464646357126" expanded="true" signature="1082:1185" ph="SELECT t.nam... ${$this-&gt;tableName}" />
-          </folding>
         </state>
       </provider>
     </entry>
