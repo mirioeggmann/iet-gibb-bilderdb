@@ -51,7 +51,7 @@ class LoginController {
 						
 						// Clear the Form fields.
 						$this->clearFormValues ();
-						header ( 'Location: /user' );
+						header ( 'Location: /photos' );
 					} else {
 						header ( 'Location: /login' );
 					}

@@ -19,8 +19,10 @@
         <p>Dimensions: <?php echo $photo->width . "/" . $photo->height ; ?></p>
         <p>Upload Date: <?php echo $photo->date; ?></p>
         <p>Tags:</p>
-        <div class="chip">
-            <?php echo $tags; ?>
-        </div>
+        <?php foreach($tags as $tag): ?>
+            <div class="chip">
+                <?php echo $tag->name; ?>
+            </div>
+        <?php endforeach;?>
     </div>
 </div>

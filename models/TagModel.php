@@ -47,4 +47,24 @@ class TagModel extends Model
             return false;
         }
     }
+
+    public function readAllTags()
+    {
+        $query = "SELECT * FROM $this->tableName";
+
+        $statement = ConnectionHandler::getConnection ()->prepare($query);
+        $statement->execute();
+
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+
+        $rows = array();
+        while ($row = $result->fetch_object()) {
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
 }

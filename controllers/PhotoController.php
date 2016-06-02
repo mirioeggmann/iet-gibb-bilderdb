@@ -25,20 +25,19 @@ class PhotoController
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $photoTagModel = new PhotoTagModel();
+            if ($photoModel->readById($id)) {
+                $photo = $photoModel->readById($id);
 
-            $photo = $photoModel->readById($id);
-            $tags = "";
-            foreach($photoTagModel->readAllTagsByPhotoId($id) as $tag) {
-                $tags = $tags . $tag->name . ', ';
-            }
-
-            if (true) {
-                $view = new View('general/main_start', array("heading" => "Photo"));
-                $view->display();
-                $view = new View('photo/index', array("photo" => $photo, "tags" => $tags));
-                $view->display();
-                $view = new View('general/main_end');
-                $view->display();
+                if (true) {
+                    $view = new View('general/main_start', array("heading" => "Photo"));
+                    $view->display();
+                    $view = new View('photo/index', array("photo" => $photo, "tags" => $photoTagModel->readAllTagsByPhotoId($id)));
+                    $view->display();
+                    $view = new View('general/main_end');
+                    $view->display();
+                }
+            } else {
+                header ( 'Location: /photos' );
             }
         } else {
             header ( 'Location: /home' );
@@ -145,7 +144,21 @@ class PhotoController
     }
 
     public function addTo() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+                    $view = new View('general/main_start', array("heading" => "Photo"));
+                    $view->display();
+                    $view = new View('photo/addTo');
+                    $view->display();
+                    $view = new View('general/main_end');
+                    $view->display();
+
+        } else {
+            header ( 'Location: /home' );
+        }
     }
 
     public function __destruct()

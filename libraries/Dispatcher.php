@@ -14,7 +14,7 @@ class Dispatcher
 										"Register"		=> array("index","doRegister"),
 										"Search"		=> array("index"),
 									  	"Upload"		=> array("index","doUpload"),
-										"User"			=> array("index", "edit", "doEdit", "delete", "doDelete"));
+										"User"			=> array("index", "edit", "doEdit", "delete", "doDelete", "changepw", "doChangepw"));
 
 		$url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 

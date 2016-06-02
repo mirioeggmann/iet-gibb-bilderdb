@@ -18,11 +18,17 @@ class UserController {
 		}
 
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+
+			$userModel = new UserModel();
+			$user = $userModel->readById($userModel->readIdByUsername($_SESSION['userName']));
+
 			$view = new View ( 'general/main_start', array (
-					"heading" => "User" 
+				"heading" => "User"
 			) );
 			$view->display ();
-			$view = new View ( 'user/index' );
+			$view = new View ( 'user/index', array(
+				"user" => $user
+			) );
 			$view->display ();
 			$view = new View ( 'general/main_end' );
 			$view->display ();
@@ -118,6 +124,63 @@ class UserController {
 			header('Location: /logout/doLogout');
 		} else {
 			header ( 'Location: /home' );
+		}
+	}
+
+	public function changepw() {
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+
+		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+
+			$view = new View ( 'general/main_start', array (
+				"heading" => "User"
+			) );
+			$view->display ();
+			$view = new View ( 'user/changepw');
+			$view->display ();
+			$view = new View ( 'general/main_end' );
+			$view->display ();
+		} else {
+			header ( 'Location: /home' );
+		}
+	}
+
+	public function doChangepw() {
+		if (isset ( $_POST ['userChangepw'] )) {
+
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			$passwordOld = (isset($_POST ['passwordold'])? $_POST ['passwordold']: "" );
+			$passwordNew = (isset($_POST ['passwordnew'])? $_POST ['passwordnew']: "" );
+			$passwordNew2 = (isset($_POST ['passwordnew2'])? $_POST ['passwordnew2']: "" );
+			$passwordOld = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordOld);
+			$passwordNewValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew) ;
+			$passwordNew2Valid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew2);
+
+			$userModel = new UserModel ();
+
+			if ($passwordOld && $passwordNewValid && $passwordNew2Valid) {
+				if (password_verify ( $passwordOld, $userModel->readPasswordByUsername($_SESSION['userName']) )) {
+						if ($passwordNew == $passwordNew2) {
+
+							$id = $userModel->readIdByUsername($_SESSION['userName']);
+							$userModel->updatePasswordById($passwordNew, $id);
+
+							header ( 'Location: /user' );
+						} else {
+							header ( 'Location: /user/changepw' );
+						}
+				} else {
+					header ( 'Location: /user/changepw' );
+				}
+			} else {
+				header ( 'Location: /user/changepw' );
+			}
+		} else {
+			header ( 'Location: /user/changepw' );
 		}
 	}
 

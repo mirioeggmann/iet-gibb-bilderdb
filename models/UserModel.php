@@ -203,4 +203,16 @@ class UserModel extends Model {
 			throw new Exception ( $statement->error );
 		}
 	}
+
+	public function updatePasswordById($password, $id)
+	{
+		$query = "UPDATE $this->tableName SET password =? WHERE id=?";
+
+		$statement = ConnectionHandler::getConnection ()->prepare($query);
+		$statement->bind_param ( 'si', $password, $id );
+
+		if (! $statement->execute ()) {
+			throw new Exception ( $statement->error );
+		}
+	}
 }

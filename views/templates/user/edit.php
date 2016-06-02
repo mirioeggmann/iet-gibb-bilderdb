@@ -24,8 +24,10 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <button id="userEdit" name="userEdit" class="btn waves-effect blue" type="submit">Bearbeiten
+                <button id="userEdit" name="userEdit" class="btn waves-effect blue" type="submit">Save
                 </button>
+                <a class="btn waves-effect blue" href="../user/index" type="button">Cancel
+                </a>
             </div>
         </div>
     </form>

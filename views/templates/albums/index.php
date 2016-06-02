@@ -11,9 +11,6 @@
                 </div>
             <?php endforeach; ?>
         </div>
-        <div class="col s12 m3 l3">
-            <p>Navigation:</p>
-        </div>
     </div>
     <div class="row">
         <ul class="pagination">

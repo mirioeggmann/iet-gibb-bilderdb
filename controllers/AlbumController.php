@@ -20,9 +20,14 @@ class AlbumController
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $userModel = new UserModel();
+            $albumModel = new AlbumModel();
+
+            //$photos = $photoModel->readAllByUserId($userModel->readIdByUsername($_SESSION['userName']));
+
             $view = new View('general/main_start', array("heading" => "Album"));
             $view->display();
-            $view = new View('album/index');
+            $view = new View('album/index', array());
             $view->display();
             $view = new View('general/main_end');
             $view->display();
