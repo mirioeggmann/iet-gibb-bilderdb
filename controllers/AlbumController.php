@@ -2,6 +2,10 @@
 
 require_once ('models/AlbumModel.php');
 require_once ('models/UserModel.php');
+require_once ('models/PhotoModel.php');
+require_once ('models/TagModel.php');
+require_once ('models/PhotoTagModel.php');
+require_once ('models/PhotoAlbumModel.php');
 
 class AlbumController
 {
@@ -13,7 +17,7 @@ class AlbumController
         $view->display();
     }
 
-    public function index()
+    public function index($id)
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -21,13 +25,71 @@ class AlbumController
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $userModel = new UserModel();
+            $photoModel = new PhotoModel();
+            $photoTagModel = new PhotoTagModel();
+            $photoAlbumModel = new PhotoAlbumModel();
             $albumModel = new AlbumModel();
+            $tagModel = new TagModel();
+            $photos = $photoAlbumModel->readAllPhotosByAlbumId($id);
+            $album = $albumModel->readById($id);
 
-            //$photos = $photoModel->readAllByUserId($userModel->readIdByUsername($_SESSION['userName']));
+            $tagIds = isset ( $_GET ['tags'] ) ? $_GET ['tags'] : "";
+
+            $tagArray = explode('-',$tagIds);
+            $tagArray =  array_unique($tagArray);
+            $selectedTags = array();
+            foreach ($tagArray as $tagId) {
+                if ($tagId != "") {
+                    if($tagModel->readById($tagId)) {
+                        array_push($selectedTags, $tagModel->readById($tagId));
+                    }
+                }
+            }
+            $selectedPhotos = array();
+            if(count($selectedTags) > 0) {
+                foreach ($photos as $photo) {
+                    foreach($selectedTags as $selectedTag) {
+                        if ($photoTagModel->readIsPhotoTagSetted($photo->id,$selectedTag->id)) {
+                            array_push($selectedPhotos, $photo);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                $selectedPhotos = $photos;
+            }
+
+            $photos = $selectedPhotos;
+
+            $page = 1;
+            if (isset ( $_GET ['page'] ) && $_GET['page'] * 12 - 12 <= count($photos)) {
+                $page = $_GET['page'];
+            }
+
+            $lastPic = $page * 12;
+            $firstPic = $page * 12 - 12;
+            $photosDisplay = array();
+            $amountOfPages = ceil(count($photos) / 12);
+
+            $i = 0;
+            foreach ($photos as $photo) {
+                if ($i >= $firstPic) {
+                    if ($firstPic < $lastPic) {
+                        array_push($photosDisplay, $photo);
+                        $firstPic += 1;
+                    } else {
+                        break;
+                    }
+                }
+                $i++;
+            }
+            $photos = $photosDisplay;
+
+            $tags = $tagModel->readAllTags();
 
             $view = new View('general/main_start', array("heading" => "Album"));
             $view->display();
-            $view = new View('album/index', array());
+            $view = new View('album/index', array("album" => $album, "tags" => $tags, "selectedTags" => $selectedTags, "tagIds" => $tagIds, "photos" => $photos, "amountOfPages" => $amountOfPages, "selectedPage" => $page));
             $view->display();
             $view = new View('general/main_end');
             $view->display();
@@ -76,6 +138,66 @@ class AlbumController
             } else {
                 header ( 'Location: /album/create' );
             }
+        } else {
+            header ( 'Location: /home' );
+        }
+    }
+
+    public function edit($id) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $albumModel = new AlbumModel();
+            $album = $albumModel->readById($id);
+
+            $view = new View('general/main_start', array("heading" => "Album edit"));
+            $view->display();
+            $view = new View('album/edit',array("album" => $album));
+            $view->display();
+            $view = new View('general/main_end');
+            $view->display();
+        } else {
+            header ( 'Location: /home' );
+        }
+    }
+
+    public function doEdit($id) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            if (isset ($_POST ['editAlbum'])) {
+                $formValues = $this->getFormValues();
+
+                if ($this->isFieldValid("/^[a-zA-Z0-9. ]{1,45}$/", $formValues['name'])) {
+                    $albumModel = new AlbumModel();
+                    $userModel = new UserModel();
+                    $albumModel->updateNameById($formValues['name'], $id);
+
+                    header ( 'Location: /album/index/'.$id );
+                } else {
+                    header ( 'Location: /album/edit/'.$id );
+                }
+            } else {
+                header ( 'Location: /album/edit/'.$id );
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
+    }
+
+    public function delete() {
+
+    }
+
+    public function doDelete($id) {
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $albumModel = new AlbumModel();
+            $albumModel->deleteById($id);
+            header('Location: /albums');
         } else {
             header ( 'Location: /home' );
         }

@@ -1,13 +1,15 @@
 <div class="row">
-    <form action="../../photo/doAddTo/<?php echo $photo->id; ?>" method="post" autocomplete="off" class="col s12 m12 l8">
+    <form action="../../photo/doAddTo/<?php echo $photo->id; ?>" method="post" autocomplete="off"
+          class="col s12 m12 l8">
         <div class="row">
+            <?php if (count($albums) > 0): ?>
             <p>Select the wished album</p>
             <div class="input-field col s12">
-                <select id="selectAlbum" class="browser-default">
+                <select id="selectAlbum" name="selectAlbum" class="browser-default">
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <?php foreach ($albums as $album): ?>
+                        <option value="<?php echo $album->id; ?>"><?php echo $album->name; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -17,5 +19,8 @@
                 </button>
             </div>
         </div>
+        <?php else: ?>
+            <p>No albums at the time.</p>
+        <?php endif; ?>
     </form>
 </div>

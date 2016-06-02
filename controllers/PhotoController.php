@@ -2,8 +2,10 @@
 
 require_once ('models/UserModel.php');
 require_once ('models/PhotoModel.php');
+require_once ('models/AlbumModel.php');
 require_once ('models/TagModel.php');
 require_once ('models/PhotoTagModel.php');
+require_once ('models/PhotoAlbumModel.php');
 require_once ('libraries/FileSystemHelper.php');
 
 class PhotoController
@@ -143,21 +145,53 @@ class PhotoController
         }
     }
 
-    public function addTo() {
+    public function addTo($id) {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
-                    $view = new View('general/main_start', array("heading" => "Photo"));
-                    $view->display();
-                    $view = new View('photo/addTo');
-                    $view->display();
-                    $view = new View('general/main_end');
-                    $view->display();
+            $albumModel = new AlbumModel();
+            $photoModel = new PhotoModel();
+            $userModel = new UserModel();
+
+            $photo = $photoModel->readById($id);
+            $albums = $albumModel->readAllByUserId($userModel->readIdByUsername($_SESSION['userName']));
+
+            $view = new View('general/main_start', array("heading" => "Photo"));
+            $view->display();
+            $view = new View('photo/addTo', array("albums" => $albums, "photo" => $photo));
+            $view->display();
+            $view = new View('general/main_end');
+            $view->display();
 
         } else {
             header ( 'Location: /home' );
+        }
+    }
+
+    public function doAddTo($id) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $photoModel = new PhotoModel();
+            $userModel = new UserModel();
+            $photoAlbumModel = new PhotoAlbumModel();
+
+            if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
+                if (!$photoAlbumModel->readIsAlbumIdSettedByPhotoId($_POST['selectAlbum'], $id)) {
+                    $photoAlbumModel->create($id, $_POST['selectAlbum']);
+                    header('Location: /photo/index/' . $id);
+                } else {
+                    header ( 'Location: /photo/addTo/'.$id );
+                }
+            } else {
+                header ( 'Location: /photo/addTo/'.$id );
+            }
+        } else {
+            header ( 'Location: /photo/addTo/'.$id );
         }
     }
 

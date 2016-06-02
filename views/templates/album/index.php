@@ -2,7 +2,7 @@
     <ul id="dropdown2" class="dropdown-content">
         <?php foreach ($tags as $tag): ?>
             <li>
-                <a href="/album/index<?php echo '?page=' . $selectedPage . '&tags=' . $tagIds . '-' . $tag->id; ?>"><?php echo $tag->name; ?></a>
+                <a href="/album/index/<?php echo $album->id ?><?php echo '?page=' . $selectedPage . '&tags=' . $tagIds . '-' . $tag->id; ?>"><?php echo $tag->name; ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -38,7 +38,7 @@
                         class="mdi-navigation-arrow-drop-down right"></i></a></p>
             <?php if (count($selectedTags) > 0): ?>
                 <?php foreach ($selectedTags as $selectedTag): ?>
-                    <a href="/photos/index?tags=<?php echo str_replace($selectedTag->id, '', $tagIds); ?>">
+                    <a href="/album/index/<?php echo $album->id ?>?tags=<?php echo str_replace($selectedTag->id, '', $tagIds); ?>">
                         <div class="chip">
                             <?php echo $selectedTag->name; ?>
                             <i class="material-icons">close</i>
@@ -50,12 +50,16 @@
     </div>
     <div class="row">
         <ul class="pagination">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class=<?php echo($selectedPage == 1 ? "disabled" : "waves-effect"); ?>><a
+                    href="/album/index/<?php echo $album->id ?>?page=<?php echo ($selectedPage - 1) . "&tags=" . $tagIds; ?>"><i
+                        class="material-icons">chevron_left</i></a></li>
             <?php for ($i = 0; $i < $amountOfPages; $i++): ?>
                 <li class="waves-effect"><a
-                        href="/photos/index?page=<?php echo ($i + 1) . "&tags=" . $tagIds; ?>"><?php echo $i + 1; ?></a>
+                        href="/album/index/<?php echo $album->id ?>?page=<?php echo ($i + 1) . "&tags=" . $tagIds; ?>"><?php echo $i + 1; ?></a>
                 </li>
             <?php endfor; ?>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li class=<?php echo(($amountOfPages) == $selectedPage ? "disabled" : "waves-effect"); ?>><a
+                    href="/album/index/<?php echo $album->id ?>?page=<?php echo ($selectedPage + 1) . "&tags=" . $tagIds; ?>"><i
+                        class="material-icons">chevron_right</i></a></li>
         </ul>
     </div>

@@ -34,4 +34,16 @@ class AlbumModel extends Model {
 
         return $rows;
     }
+
+    public function updateNameById($name, $id)
+    {
+        $query = "UPDATE $this->tableName SET name=? WHERE id=?";
+
+        $statement = ConnectionHandler::getConnection ()->prepare($query);
+        $statement->bind_param ( 'si', $name, $id );
+
+        if (! $statement->execute ()) {
+            throw new Exception ( $statement->error );
+        }
+    }
 }
