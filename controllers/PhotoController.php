@@ -6,7 +6,7 @@ require_once ('models/AlbumModel.php');
 require_once ('models/TagModel.php');
 require_once ('models/PhotoTagModel.php');
 require_once ('models/PhotoAlbumModel.php');
-require_once ('libraries/FileSystemHelper.php');
+require_once ('libraries/FileService.php');
 
 class PhotoController
 {
@@ -130,11 +130,11 @@ class PhotoController
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
-            $fileSystemHelper = new FileSystemHelper();
+            $fileService = new FileService();
 
             if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
-                $fileSystemHelper->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/photos/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
-                $fileSystemHelper->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/thumbnails/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
+                $fileService->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/photos/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
+                $fileService->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/thumbnails/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
                 $photoModel->deleteById($id);
                 header('Location: /photos');
             } else {

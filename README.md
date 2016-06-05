@@ -9,6 +9,8 @@ mirio.eggmann@protonmail.ch
 
 ## Getting started:
 
+Productive version: Delete /info.php.
+
 ## Licence
 
 

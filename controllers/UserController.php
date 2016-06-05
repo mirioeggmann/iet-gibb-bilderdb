@@ -1,7 +1,7 @@
 <?php
 
 require_once ('models/UserModel.php');
-require_once ('libraries/FileSystemHelper.php');
+require_once ('libraries/FileService.php');
 
 class UserController {
 	public function __construct() {
@@ -118,8 +118,8 @@ class UserController {
 	public function doDelete() {
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 			$userModel = new UserModel();
-			$fileSystemHelper = new FileSystemHelper();
-			$fileSystemHelper->delete('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']));
+			$fileService = new FileService();
+			$fileService->delete('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']));
 			$userModel->deleteById($userModel->readIdByUsername($_SESSION['userName']));
 			header('Location: /logout/doLogout');
 		} else {

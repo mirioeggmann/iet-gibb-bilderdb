@@ -1,4 +1,25 @@
+# Handles all url based things.
+#
+# Rewrites the url that all requests go throught the index.php. It also prevents the server from disposing unwanted data in the filesystem.
+# Furter it throws custom exceptions, if an error occured.
+#
+#	@copyright		luvirx 2016
+#   @license		    https://github.com/luvirx/Lychez/blob/master/LICENSE.md
+#   @version     	1.0.0
+#   @author			Mirio Eggmann <mirio.eggmann@protonmail.ch>
+
+# Changes the request to always pass the index.php file instead.
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^.*$ index.php [PT,L]
+
+# Prevent showing unwanted data in filesytem
+Options -Indexes
+
+# Custom error documents
+ErrorDocument 400 /index.php
+ErrorDocument 401 /index.php
+ErrorDocument 403 /views/templates/errors/403.php
+ErrorDocument 404 /views/templates/errors/404.php
+ErrorDocument 500 /index.php

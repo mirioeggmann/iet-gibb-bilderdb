@@ -62,7 +62,7 @@ class RegisterController {
 							// Insert the new user in the db.
 							$userModel->create ( $formValues ['firstName'], $formValues ['lastName'], $formValues ['userName'], $formValues ['email'], $formValues ['password'] );
 							$id = $userModel->readIdByUsername($formValues['userName']);
-							if (!file_exists('./userHomes/'.$formValues ['userName'])) {
+							if (!file_exists('./userHomes/'.$id)) {
 								mkdir('./userHomes/'.$id.'/photos', 0777, true);
 								mkdir('./userHomes/'.$id.'/thumbnails', 0777, true);
 							}

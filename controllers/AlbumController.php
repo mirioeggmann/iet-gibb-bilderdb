@@ -1,13 +1,8 @@
 <?php
 
-require_once ('models/AlbumModel.php');
-require_once ('models/UserModel.php');
-require_once ('models/PhotoModel.php');
-require_once ('models/TagModel.php');
-require_once ('models/PhotoTagModel.php');
-require_once ('models/PhotoAlbumModel.php');
+require_once ('libraries/Controller.php');
 
-class AlbumController
+class AlbumController extends Controller
 {
     public function __construct()
     {
@@ -24,8 +19,6 @@ class AlbumController
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
-            $userModel = new UserModel();
-            $photoModel = new PhotoModel();
             $photoTagModel = new PhotoTagModel();
             $photoAlbumModel = new PhotoAlbumModel();
             $albumModel = new AlbumModel();
@@ -220,13 +213,5 @@ class AlbumController
         } else {
             return false;
         }
-    }
-
-    public function __destruct()
-    {
-        $view = new View('general/footer');
-        $view->display();
-        $view = new View('general/foot');
-        $view->display();
     }
 }
