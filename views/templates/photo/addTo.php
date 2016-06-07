@@ -3,7 +3,7 @@
           class="col s12 m12 l8">
         <div class="row">
             <?php if (count($albums) > 0): ?>
-            <p>Select the wished album</p>
+            <h5>Select the wished album</h5>
             <div class="input-field col s12">
                 <select id="selectAlbum" name="selectAlbum" class="browser-default">
                     <option value="" disabled selected>Choose your option</option>
@@ -12,6 +12,11 @@
                     <?php endforeach; ?>
                 </select>
             </div>
+
+            <h5>Member of the following albums:</h5>
+            <?php foreach ($settedAlbums as $settedAlbum): ?>
+                <p><a href="/album/index/<?php echo $settedAlbum->id; ?>"><?php echo $settedAlbum->name; ?></a></p>
+            <?php endforeach; ?>
         </div>
         <div class="row">
             <div class="input-field col s12">

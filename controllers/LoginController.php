@@ -69,7 +69,7 @@ class LoginController {
 	private function getFormValues() {
 		$values = array (
 				'email' => (isset ( $_POST ['email'] ) ? $_POST ['email'] : ""),
-				'password' => (isset ( $_POST ['password'] ) ? $_POST ['password'] : "") 
+				'password' => (isset ( $_POST ['password'] ) ? $_POST ['password'] : "")
 		);
 		return $values;
 	}

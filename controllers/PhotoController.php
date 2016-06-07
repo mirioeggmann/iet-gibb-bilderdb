@@ -27,19 +27,24 @@ class PhotoController
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $photoTagModel = new PhotoTagModel();
-            if ($photoModel->readById($id)) {
-                $photo = $photoModel->readById($id);
+            $userModel = new UserModel();
+            if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
+                if ($photoModel->readById($id)) {
+                    $photo = $photoModel->readById($id);
 
-                if (true) {
-                    $view = new View('general/main_start', array("heading" => "Photo"));
-                    $view->display();
-                    $view = new View('photo/index', array("photo" => $photo, "tags" => $photoTagModel->readAllTagsByPhotoId($id)));
-                    $view->display();
-                    $view = new View('general/main_end');
-                    $view->display();
+                    if (true) {
+                        $view = new View('general/main_start', array("heading" => "Photo"));
+                        $view->display();
+                        $view = new View('photo/index', array("photo" => $photo, "tags" => $photoTagModel->readAllTagsByPhotoId($id)));
+                        $view->display();
+                        $view = new View('general/main_end');
+                        $view->display();
+                    }
+                } else {
+                    header('Location: /photos');
                 }
             } else {
-                header ( 'Location: /photos' );
+                header('Location: /photos');
             }
         } else {
             header ( 'Location: /home' );
@@ -71,6 +76,8 @@ class PhotoController
                 $view->display();
                 $view = new View('general/main_end');
                 $view->display();
+            } else {
+                header ( 'Location: /photos' );
             }
         } else {
             header ( 'Location: /home' );
@@ -83,6 +90,7 @@ class PhotoController
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+
             if (isset ( $_POST ['photoEdit'] )) {
 
                 $photoModel = new PhotoModel();
@@ -90,16 +98,16 @@ class PhotoController
                 $tagModel = new TagModel();
                 $photoTagModel = new PhotoTagModel();
 
-                if (true) {
-                    $photoModel->updateDescriptionById($_POST['description'],$id);
-                    $photoModel->updateTitleById($_POST['title'],$id);
+                if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
+                    $photoModel->updateDescriptionById(htmlspecialchars($_POST['description']),$id);
+                    $photoModel->updateTitleById(htmlspecialchars($_POST['title']),$id);
 
                     $tags = $_POST['tags'];
                     $tagsReplaced = str_replace(' ', '', $tags);
                     $tagsArray = explode(',',$tagsReplaced);
                     foreach($tagsArray as $tag) {
                         if (!$tagModel->readIsTagSetted($tag) && $tag != "") {
-                            $tagModel->create($tag);
+                            $tagModel->create(htmlspecialchars($tag));
                         }
                         if ($tag != "" && !$photoTagModel->readIsPhotoTagSetted($id,$tagModel->readIdByName($tag))) {
                             $photoTagModel->create($id,$tagModel->readIdByName($tag));
@@ -108,7 +116,7 @@ class PhotoController
 
                     header('Location: /photo/index/'.$id);
                 } else {
-                    header('Location: /home');
+                    header('Location: /photos');
                 }
             } else {
                 header('Location: /photo/edit/'.$id);
@@ -118,8 +126,8 @@ class PhotoController
         }
     }
 
-    public function delete() {
-
+    public function delete($id) {
+        header ( 'Location: /photo/doDelete/' . $id );
     }
 
     public function doDelete($id) {
@@ -138,7 +146,7 @@ class PhotoController
                 $photoModel->deleteById($id);
                 header('Location: /photos');
             } else {
-                header ( 'Location: /home' );
+                header ( 'Location: /photos' );
             }
         } else {
             header ( 'Location: /home' );
@@ -154,16 +162,22 @@ class PhotoController
             $albumModel = new AlbumModel();
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
+            $photoAlbumModel = new PhotoAlbumModel();
 
-            $photo = $photoModel->readById($id);
-            $albums = $albumModel->readAllByUserId($userModel->readIdByUsername($_SESSION['userName']));
+            if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
+                $photo = $photoModel->readById($id);
+                $albums = $albumModel->readAllByUserId($userModel->readIdByUsername($_SESSION['userName']));
+                $settedAlbums = $photoAlbumModel->readAllAlbumsByPhotoId($id);
 
-            $view = new View('general/main_start', array("heading" => "Photo"));
-            $view->display();
-            $view = new View('photo/addTo', array("albums" => $albums, "photo" => $photo));
-            $view->display();
-            $view = new View('general/main_end');
-            $view->display();
+                $view = new View('general/main_start', array("heading" => "Photo"));
+                $view->display();
+                $view = new View('photo/addTo', array("albums" => $albums, "photo" => $photo, "settedAlbums" => $settedAlbums));
+                $view->display();
+                $view = new View('general/main_end');
+                $view->display();
+            } else {
+                header ( 'Location: /photos' );
+            }
 
         } else {
             header ( 'Location: /home' );

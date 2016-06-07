@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<input value="<?php echo $email; ?>" id="email" name="email"
-					type="text" class="validate"> <label for="email">Email</label>
+					type="text" class="validate"> <label for="email">Email or Username</label>
 			</div>
 		</div>
 		<div class="row">
@@ -17,6 +17,8 @@
 			<div class="input-field col s12">
 				<button class="btn waves-effect blue" type="submit" id="login"
 					name="login">Login</button>
+				 or <a class="" href="../register"">Register
+				</a>
 			</div>
 		</div>
 	</form>

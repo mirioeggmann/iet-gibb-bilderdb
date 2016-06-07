@@ -7,10 +7,12 @@
 					</h2>
 					<h5 class="center">Modul151</h5>
 
-					<p class="light">We did most of the heavy lifting for you to
-						provide a default stylings that incorporate our custom components.
-						Additionally, we refined animations and transitions to provide a
-						smoother experience for developers.</p>
+					<p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+						porta eros condimentum, vehicula magna sed, suscipit nibh. Suspendisse potenti.
+						Fusce condimentum suscipit sapien, nec vulputate ligula mollis sed. Nullam eget
+						dapibus nibh. Etiam viverra eleifend nisi, quis scelerisque risus venenatis sed.
+						Vivamus at dignissim risus. Proin malesuada orci non mi sodales fringilla. Integer
+						mattis dui ut maximus posuere. Sed sed justo in ipsum imperdiet eleifend. </p>
 				</div>
 			</div>
 
@@ -21,11 +23,12 @@
 					</h2>
 					<h5 class="center">Mirio Eggmann</h5>
 
-					<p class="light">By utilizing elements and principles of Material
-						Design, we were able to create a framework that incorporates
-						components and animations that provide more feedback to users.
-						Additionally, a single underlying responsive system across all
-						platforms allow for a more unified user experience.</p>
+					<p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+						porta eros condimentum, vehicula magna sed, suscipit nibh. Suspendisse potenti.
+						Fusce condimentum suscipit sapien, nec vulputate ligula mollis sed. Nullam eget
+						dapibus nibh. Etiam viverra eleifend nisi, quis scelerisque risus venenatis sed.
+						Vivamus at dignissim risus. Proin malesuada orci non mi sodales fringilla. Integer
+						mattis dui ut maximus posuere. Sed sed justo in ipsum imperdiet eleifend. </p>
 				</div>
 			</div>
 
@@ -36,10 +39,12 @@
 					</h2>
 					<h5 class="center">Gibb</h5>
 
-					<p class="light">We have provided detailed documentation as well as
-						specific code examples to help new users get started. We are also
-						always open to feedback and can answer any questions a user may
-						have about Materialize.</p>
+					<p class="light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+						porta eros condimentum, vehicula magna sed, suscipit nibh. Suspendisse potenti.
+						Fusce condimentum suscipit sapien, nec vulputate ligula mollis sed. Nullam eget
+						dapibus nibh. Etiam viverra eleifend nisi, quis scelerisque risus venenatis sed.
+						Vivamus at dignissim risus. Proin malesuada orci non mi sodales fringilla. Integer
+						mattis dui ut maximus posuere. Sed sed justo in ipsum imperdiet eleifend. </p>
 				</div>
 			</div>
 		</div>

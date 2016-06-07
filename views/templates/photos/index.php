@@ -33,6 +33,7 @@
         <?php endif; ?>
 
         <div class="col s12 m3 l3">
+            <a href="../../upload" title="Upload photos">Upload photos<i class="material-icons left">cloud_upload</i></a>
             <p>Tags:
                 <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Select<i
                         class="mdi-navigation-arrow-drop-down right"></i></a></p>

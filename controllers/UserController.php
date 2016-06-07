@@ -43,7 +43,6 @@ class UserController {
 		}
 
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
-
 			$userModel = new UserModel();
 			$user = $userModel->readById($userModel->readIdByUsername($_SESSION['userName']));
 
@@ -84,10 +83,10 @@ class UserController {
 						if (! $userModel->readIsUsernameUsed ( $formValues ['userName'] ) || $formValues['userName'] == $userModel->readById($id)->userName) {
 							// Insert the new user in the db.
 							
-							$userModel->updateFirstNameById($formValues['firstName'], $id);
-							$userModel->updateLastNameById($formValues['lastName'], $id);
-							$userModel->updateEmailById($formValues['email'], $id);
-							$userModel->updateUserNameById($formValues['userName'], $id);
+							$userModel->updateFirstNameById(htmlspecialchars($formValues['firstName']), $id);
+							$userModel->updateLastNameById(htmlspecialchars($formValues['lastName']), $id);
+							$userModel->updateEmailById(htmlspecialchars($formValues['email']), $id);
+							$userModel->updateUserNameById(htmlspecialchars($formValues['userName']), $id);
 
 							$_SESSION ['userName'] = $formValues ['userName'];
 
@@ -156,13 +155,13 @@ class UserController {
 			$passwordOld = (isset($_POST ['passwordold'])? $_POST ['passwordold']: "" );
 			$passwordNew = (isset($_POST ['passwordnew'])? $_POST ['passwordnew']: "" );
 			$passwordNew2 = (isset($_POST ['passwordnew2'])? $_POST ['passwordnew2']: "" );
-			$passwordOld = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordOld);
+			$passwordOldValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordOld);
 			$passwordNewValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew) ;
 			$passwordNew2Valid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew2);
 
 			$userModel = new UserModel ();
 
-			if ($passwordOld && $passwordNewValid && $passwordNew2Valid) {
+			if ($passwordOldValid && $passwordNewValid && $passwordNew2Valid) {
 				if (password_verify ( $passwordOld, $userModel->readPasswordByUsername($_SESSION['userName']) )) {
 						if ($passwordNew == $passwordNew2) {
 

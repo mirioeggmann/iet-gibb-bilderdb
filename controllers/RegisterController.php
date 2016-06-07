@@ -94,12 +94,12 @@ class RegisterController {
 	
 	private function getFormValues() {
 		$values = array (
-				'firstName' => (isset ( $_POST ['firstName'] ) ? $_POST ['firstName'] : ""),
-				'lastName' => (isset ( $_POST ['lastName'] ) ? $_POST ['lastName'] : ""),
+				'firstName' => (isset ( $_POST ['firstName'] ) ? htmlspecialchars($_POST ['firstName']) : ""),
+				'lastName' => (isset ( $_POST ['lastName'] ) ? htmlspecialchars($_POST ['lastName']) : ""),
 				'userName' => (isset ( $_POST ['userName'] ) ? $_POST ['userName'] : ""),
-				'email' => (isset ( $_POST ['email'] ) ? $_POST ['email'] : ""),
+				'email' => (isset ( $_POST ['email'] ) ? htmlspecialchars($_POST ['email']) : ""),
 				'password' => (isset ( $_POST ['password'] ) ? $_POST ['password'] : ""),
-				'password2' => (isset ( $_POST ['password2'] ) ? $_POST ['password2'] : "") 
+				'password2' => (isset ( $_POST ['password2'] ) ? $_POST ['password2'] : "")
 		);
 		return $values;
 	}

@@ -5,11 +5,17 @@
                 <div class="col s6 m4 l3">
                     <a href="/album/index/<?php echo $album->id; ?>">
                         <div class="card">
-                            <h1 class="card-title"><?php echo $album->name; ?></h1>
+                            <h1 class="card-title center-align"><?php echo substr($album->name, 0 , 10); ?></h1>
+                            <div class="card-image center-align">
+                                <i class="large material-icons">collections</i>
+                            </div>
                         </div>
                     </a>
                 </div>
             <?php endforeach; ?>
+        </div>
+        <div class="col s12 m3 l3">
+            <a href="../../album/create" title="Create album">Create album<i class="material-icons left">add</i></a>
         </div>
     </div>
     <div class="row">

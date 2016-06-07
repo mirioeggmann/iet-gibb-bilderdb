@@ -46,4 +46,24 @@ class AlbumModel extends Model {
             throw new Exception ( $statement->error );
         }
     }
+
+    public function readIsAlbumFromUser($id, $userId) {
+        $query = "SELECT user_id FROM $this->tableName WHERE id=?";
+
+        $statement = ConnectionHandler::getConnection ()->prepare ( $query );
+        $statement->bind_param ( 'i', $id );
+        $statement->execute ();
+        $result = $statement->get_result();
+
+        $row = $result->fetch_assoc();
+        $value = $row['user_id'];
+
+        $result->close();
+
+        if ($value == $userId) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

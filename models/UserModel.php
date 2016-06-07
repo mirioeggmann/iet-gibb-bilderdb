@@ -206,6 +206,8 @@ class UserModel extends Model {
 
 	public function updatePasswordById($password, $id)
 	{
+		$password = password_hash ( $password, PASSWORD_BCRYPT );
+
 		$query = "UPDATE $this->tableName SET password =? WHERE id=?";
 
 		$statement = ConnectionHandler::getConnection ()->prepare($query);

@@ -38,6 +38,8 @@
       <div class="input-field col s12">
         <button id="register" name="register" class="btn waves-effect blue" type="submit">Register
         </button>
+        or <a class="" href="../login"">Login
+        </a>
       </div>
     </div>
   </form>

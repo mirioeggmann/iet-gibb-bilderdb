@@ -33,6 +33,8 @@
         <?php endif; ?>
 
         <div class="col s12 m3 l3">
+            <a href="../../album/edit/<?php echo $album->id; ?>" title="Edit album"><i class="material-icons">edit</i></a>
+            <a href="../../album/doDelete/<?php echo $album->id; ?>" title="Delete album"><i class="material-icons">delete</i></a>
             <p>Tags:
                 <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Select<i
                         class="mdi-navigation-arrow-drop-down right"></i></a></p>
