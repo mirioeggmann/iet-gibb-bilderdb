@@ -15,19 +15,16 @@
 ?>
 
 <div class="row">
-    <form action="../album/doCreate" method="post" autocomplete="off"
-          class="col s12 m8 l8">
+    <form action="../../album/doDelete/<?php echo $album->id; ?>" method="post" autocomplete="off" class="col s12 m12 l8">
         <div class="row">
-            <div class="input-field col s12">
-                <input value="<?php echo $name; ?>" id="name" name="name"
-                       type="text" class="validate"> <label for="name">Name</label>
-            </div>
-        </div>
+            <p>Do you really want to delete the photo?</p>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <button class="btn waves-effect blue" type="submit" id="createAlbum"
-                        name="createAlbum">Create</button>
+                <button id="photoDelete" name="albumDelete" class="btn waves-effect blue" type="submit">Delete
+                </button>
+                <a class="btn waves-effect blue" href="../../album/index/<?php echo $album->id; ?>" type="button">Cancel
+                </a>
             </div>
         </div>
     </form>

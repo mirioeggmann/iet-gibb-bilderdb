@@ -1,3 +1,19 @@
+<?php
+
+/**
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
+ *
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
+ *
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+?>
+
 <?php if (count($tags) > 0): ?>
     <ul id="dropdown2" class="dropdown-content">
         <?php foreach ($tags as $tag): ?>
@@ -34,7 +50,7 @@
 
         <div class="col s12 m3 l3">
             <a href="../../album/edit/<?php echo $album->id; ?>" title="Edit album"><i class="material-icons">edit</i></a>
-            <a href="../../album/doDelete/<?php echo $album->id; ?>" title="Delete album"><i class="material-icons">delete</i></a>
+            <a href="../../album/delete/<?php echo $album->id; ?>" title="Delete album"><i class="material-icons">delete</i></a>
             <p>Tags:
                 <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Select<i
                         class="mdi-navigation-arrow-drop-down right"></i></a></p>

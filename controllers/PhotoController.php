@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
+ *
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
+ *
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+
 require_once ('models/UserModel.php');
 require_once ('models/PhotoModel.php');
 require_once ('models/AlbumModel.php');
@@ -127,7 +140,29 @@ class PhotoController
     }
 
     public function delete($id) {
-        header ( 'Location: /photo/doDelete/' . $id );
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $photoModel = new PhotoModel();
+            $userModel = new UserModel();
+            if ($photoModel->readIsPhotoFromUser($id, $userModel->readIdByUsername($_SESSION['userName']))) {
+                $photo = $photoModel->readById($id);
+
+                $view = new View('general/main_start', array("heading" => "Photo"));
+                $view->display();
+                $view = new View('photo/delete', array("photo" => $photo));
+                $view->display();
+                $view = new View('general/main_end');
+                $view->display();
+            } else {
+                header('Location: /photos');
+            }
+
+        } else {
+            header ( 'Location: /home' );
+        }
     }
 
     public function doDelete($id) {
@@ -139,14 +174,17 @@ class PhotoController
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
             $fileService = new FileService();
-
-            if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
-                $fileService->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/photos/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
-                $fileService->deleteFile('./userHomes/'.$userModel->readIdByUsername($_SESSION['userName']).'/thumbnails/'.$photoModel->readById($id)->name.'.'.$photoModel->readById($id)->type);
-                $photoModel->deleteById($id);
-                header('Location: /photos');
+            if (isset ( $_POST ['photoDelete'] )) {
+                if ($photoModel->readIsPhotoFromUser($id, $userModel->readIdByUsername($_SESSION['userName']))) {
+                    $fileService->deleteFile('./userHomes/' . $userModel->readIdByUsername($_SESSION['userName']) . '/photos/' . $photoModel->readById($id)->name . '.' . $photoModel->readById($id)->type);
+                    $fileService->deleteFile('./userHomes/' . $userModel->readIdByUsername($_SESSION['userName']) . '/thumbnails/' . $photoModel->readById($id)->name . '.' . $photoModel->readById($id)->type);
+                    $photoModel->deleteById($id);
+                    header('Location: /photos');
+                } else {
+                    header('Location: /photos');
+                }
             } else {
-                header ( 'Location: /photos' );
+                header('Location: /photo/delete/'.$id);
             }
         } else {
             header ( 'Location: /home' );

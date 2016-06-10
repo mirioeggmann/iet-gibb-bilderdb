@@ -1,4 +1,18 @@
 <?php
+
+/**
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
+ *
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
+ *
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+
 require_once ('models/UserModel.php');
 
 class LoginController {
@@ -37,14 +51,12 @@ class LoginController {
             }
 			// Get the values of the Form.
 			$formValues = $this->getFormValues ();
-			$emailValid = ($this->isFieldValid ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] ) || $this->isFieldValid ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['email'] ));
-			$passwordValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password'] );
-			if ($emailValid && $passwordValid) {
 				$userModel = new UserModel ();
 				if ($userModel->readIsEmailUsed ( $formValues ['email'] ) || $userModel->readIsUsernameUsed( $formValues ['email'] )) {
 					if (password_verify ( $formValues ['password'], $userModel->readPasswordByEmail ( $formValues ['email'] ) ) || password_verify ( $formValues ['password'], $userModel->readPasswordByUsername( $formValues ['email'] ) )) {
 						// Login the user.
 						session_start ();
+						session_regenerate_id();
                         $id = (strpos($formValues['email'], '@') !== false ? $userModel->readIdByEmail($formValues['email']): $userModel->readIdByUsername($formValues['email']));
 						$_SESSION ['userName'] = $userModel->readUserNameById($id);
 						$_SESSION ['loggedIn'] = true;
@@ -58,9 +70,7 @@ class LoginController {
 				} else {
 					header ( 'Location: /login' );
 				}
-			} else {
-				header ( 'Location: /login' );
-			}
+
 		} else {
 			header ( 'Location: /login' );
 		}

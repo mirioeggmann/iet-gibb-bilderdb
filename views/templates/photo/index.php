@@ -1,3 +1,19 @@
+<?php
+
+/**
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
+ *
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
+ *
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+?>
+
 <div class="row">
     <div class="col s12 m8 l8">
         <div class="card">
@@ -10,7 +26,7 @@
     </div>
     <div class="col s12 m4 l4">
         <a href="../../photo/edit/<?php echo $photo->id; ?>" title="Edit photo"><i class="material-icons">edit</i></a>
-        <a href="../../photo/doDelete/<?php echo $photo->id; ?>" title="Delete photo"><i class="material-icons">delete</i></a>
+        <a href="../../photo/delete/<?php echo $photo->id; ?>" title="Delete photo"><i class="material-icons">delete</i></a>
         <a href="../../photo/addTo/<?php echo $photo->id; ?>" title="Add photo to album"><i class="material-icons">add_to_photos</i></a>
         <p>Title: <?php echo $photo->title; ?></p>
         <p>Type: <?php echo $photo->type; ?></p>

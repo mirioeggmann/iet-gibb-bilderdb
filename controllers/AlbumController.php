@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
+ *
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
+ *
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+
 require_once ('libraries/Controller.php');
 
 class AlbumController extends Controller
@@ -198,19 +211,45 @@ class AlbumController extends Controller
         }
     }
 
-    public function delete() {
+    public function delete($id) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $albumModel = new AlbumModel();
+            $userModel = new UserModel();
+                if ($albumModel->readIsAlbumFromUser($id, $userModel->readIdByUsername($_SESSION['userName']))) {
+                    $album = $albumModel->readById($id);
+
+                    $view = new View('general/main_start', array("heading" => "Album edit"));
+                    $view->display();
+                    $view = new View('album/delete', array("album" => $album));
+                    $view->display();
+                    $view = new View('general/main_end');
+                    $view->display();
+                } else {
+                    header('Location: /albums');
+                }
+
+        } else {
+            header ( 'Location: /home' );
+        }
     }
 
     public function doDelete($id) {
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $albumModel = new AlbumModel();
             $userModel = new UserModel();
-            if ($albumModel->readIsAlbumFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
-                $albumModel->deleteById($id);
-                header('Location: /albums');
+            if (isset ( $_POST ['albumDelete'] )) {
+                if ($albumModel->readIsAlbumFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
+                    $albumModel->deleteById($id);
+                    header('Location: /albums');
+                } else {
+                    header ( 'Location: /albums' );
+                }
             } else {
-                header ( 'Location: /albums' );
+                header('Location: /album/delete/'.$id);
             }
         } else {
             header ( 'Location: /home' );

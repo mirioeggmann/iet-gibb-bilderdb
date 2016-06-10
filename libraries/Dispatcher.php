@@ -1,14 +1,23 @@
 <?php
 
 /**
- * Class Dispatcher
+ * Lychez : Image database (https://lychez.luvirx.io)
+ * Copyright (c) luvirx (https://luvirx.io)
  *
- * Handles all requests by the user. It displays the asked views or inserts data in the database.
+ * Licensed under The MIT License
+ * For the full copyright and license information, please see the LICENSE.md
+ * Redistributions of the files must retain the above copyright notice.
  *
- *	@copyright		luvirx 2016
- *	@license		https://github.com/luvirx/Lychez/blob/master/LICENSE.md
- *  @version     	1.0.0
- *	@author			Mirio Eggmann <mirio.eggmann@protonmail.ch>
+ * @link 		https://lychez.luvirx.io Lychez Project
+ * @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+ * @license		https://opensource.org/licenses/mit-license.php MIT License
+ */
+
+/**
+ * Handles all requests by the user and leads it to the corresponding Controller.
+ *
+ *  @version    1.0.0
+ *	@author		Mirio Eggmann <mirio.eggmann@protonmail.ch>
  */
 class Dispatcher
 {
