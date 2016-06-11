@@ -16,6 +16,7 @@ E-Mail me: mirio.eggmann@protonmail.ch
 
 ## Getting started:
 
+Go to Lychez/docs/Dokumentation_Lychez.docx for the Documentation in German.
 
 ## Licence
 
