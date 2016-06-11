@@ -23,15 +23,14 @@
                        type="text" class="validate"> <label for="name">Name</label>
             </div>
         </div>
-</div>
-<div class="row">
-    <div class="input-field col s12">
-        <button class="btn waves-effect blue" type="submit" id="editAlbum"
+        <div class="row">
+            <div class="input-field col s12">
+                <button class="btn waves-effect blue" type="submit" id="editAlbum"
                 name="editAlbum">Edit
-        </button>
-        <a class="btn waves-effect blue" href="../../album/index/<?php echo $album->id; ?>" type="button">Cancel
-        </a>
-    </div>
-</div>
-</form>
+                </button>
+                <a class="btn waves-effect blue" href="../../album/index/<?php echo $album->id; ?>" type="button">Cancel
+                </a>
+            </div>
+        </div>
+    </form>
 </div>

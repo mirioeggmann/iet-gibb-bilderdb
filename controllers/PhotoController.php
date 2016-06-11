@@ -13,30 +13,42 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('models/UserModel.php');
-require_once ('models/PhotoModel.php');
-require_once ('models/AlbumModel.php');
-require_once ('models/TagModel.php');
-require_once ('models/PhotoTagModel.php');
-require_once ('models/PhotoAlbumModel.php');
 require_once ('libraries/FileService.php');
+require_once ('Controller.php');
 
-class PhotoController
+/**
+ * Handles all actions that include a single photo.
+ */
+class PhotoController extends Controller
 {
+    /**
+     * Displays a custom header.
+     */
     public function __construct()
     {
+        $mySessionHandler = new MySessionHandler();
+        if($mySessionHandler->isUserLoggedIn()) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
+
         $view = new View('general/head',array("title" => "Photo - lychez.ch"));
         $view->display();
         $view = new View('general/header');
         $view->display();
     }
 
+    /**
+     * The single site with all the informations of the selected photo.
+     *
+     * @param $id The id of the photo.
+     * @throws Exception If the photo doesn't exist.
+     */
     public function index($id)
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $photoTagModel = new PhotoTagModel();
@@ -64,12 +76,14 @@ class PhotoController
         }
     }
 
+    /**
+     * Displays the edit form of a photo to add a description etc.
+     *
+     * @param $id The id of the photo.
+     * @throws Exception If the photo doesn't exist.
+     */
     public function edit($id)
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
@@ -97,11 +111,13 @@ class PhotoController
         }
     }
 
+    /**
+     * Performs the edit of the picture informations.
+     *
+     * @param $id The id of the photo.
+     * @throws Exception If the photo doesn't exist.
+     */
     public function doEdit($id) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 
             if (isset ( $_POST ['photoEdit'] )) {
@@ -110,24 +126,33 @@ class PhotoController
                 $userModel = new UserModel();
                 $tagModel = new TagModel();
                 $photoTagModel = new PhotoTagModel();
+                $validator = new Validator();
+                $formValues = $this->getFormValues();
 
                 if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
-                    $photoModel->updateDescriptionById(htmlspecialchars($_POST['description']),$id);
-                    $photoModel->updateTitleById(htmlspecialchars($_POST['title']),$id);
+                    $descriptionValid = $validator->isValid ( "/^.{0,500}$/", $formValues ['description'] );
+                    $titleValid = $validator->isValid  ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['title'] );
+                    $tagsValid = $validator->isValid  ( "/^[a-zA-Z0-9, ]{0,}$/", $formValues ['tags'] );
+                    if ($descriptionValid && $titleValid && $tagsValid) {
+                        $photoModel->updateDescriptionById(htmlspecialchars($formValues['description']),$id);
+                        $photoModel->updateTitleById(htmlspecialchars($formValues['title']),$id);
 
-                    $tags = $_POST['tags'];
-                    $tagsReplaced = str_replace(' ', '', $tags);
-                    $tagsArray = explode(',',$tagsReplaced);
-                    foreach($tagsArray as $tag) {
-                        if (!$tagModel->readIsTagSetted($tag) && $tag != "") {
-                            $tagModel->create(htmlspecialchars($tag));
+                        $tags = $formValues['tags'];
+                        $tagsReplaced = str_replace(' ', '', $tags);
+                        $tagsArray = explode(',',$tagsReplaced);
+                        foreach($tagsArray as $tag) {
+                            if (!$tagModel->readIsTagSetted($tag) && $tag != "") {
+                                $tagModel->create(htmlspecialchars($tag));
+                            }
+                            if ($tag != "" && !$photoTagModel->readIsPhotoTagSetted($id,$tagModel->readIdByName($tag))) {
+                                $photoTagModel->create($id,$tagModel->readIdByName($tag));
+                            }
                         }
-                        if ($tag != "" && !$photoTagModel->readIsPhotoTagSetted($id,$tagModel->readIdByName($tag))) {
-                            $photoTagModel->create($id,$tagModel->readIdByName($tag));
-                        }
+
+                        header('Location: /photo/index/'.$id);
+                    } else {
+                        header('Location: /photo/edit/'.$id);
                     }
-
-                    header('Location: /photo/index/'.$id);
                 } else {
                     header('Location: /photos');
                 }
@@ -139,11 +164,12 @@ class PhotoController
         }
     }
 
+    /**
+     * Displays a form if the user really wants to delete the photo.
+     *
+     * @param $id The id of the photo.
+     */
     public function delete($id) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
@@ -165,11 +191,13 @@ class PhotoController
         }
     }
 
+    /**
+     * Performs the deletion of a photo.
+     *
+     * @param $id The id of the photo.
+     * @throws Exception When the photo doesn't exist.
+     */
     public function doDelete($id) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
@@ -191,11 +219,13 @@ class PhotoController
         }
     }
 
+    /**
+     * Displays a form to select an album to add the picture to.
+     *
+     * @param $id The id of the picture.
+     * @throws Exception If the picture doesn't exist.
+     */
     public function addTo($id) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $albumModel = new AlbumModel();
             $photoModel = new PhotoModel();
@@ -222,11 +252,13 @@ class PhotoController
         }
     }
 
+    /**
+     * Performs the adding to an album.
+     *
+     * @param $id The id of the picture.
+     * @throws Exception When the photo doesn't exist.
+     */
     public function doAddTo($id) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $photoModel = new PhotoModel();
             $userModel = new UserModel();
@@ -247,11 +279,15 @@ class PhotoController
         }
     }
 
-    public function __destruct()
-    {
-        $view = new View('general/footer');
-        $view->display();
-        $view = new View('general/foot');
-        $view->display();
+    /**
+     * @return array With all values of the photo forms.
+     */
+    private function getFormValues() {
+        $values = array (
+            'description' => (isset ( $_POST ['description'] ) ? $_POST ['description'] : ""),
+            'tags' => (isset ( $_POST ['tags'] ) ? $_POST ['tags'] : ""),
+            'title' => (isset ( $_POST ['title'] ) ? $_POST ['title'] : "")
+        );
+        return $values;
     }
 }

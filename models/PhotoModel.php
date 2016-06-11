@@ -14,9 +14,26 @@
  */
 
 require_once ('libraries/Model.php');
+
+/**
+ * Handles all sql queries of the photo table.
+ */
 class PhotoModel extends Model {
 	protected $tableName = 'photo';
-	
+
+    /**
+     * Create a new photo entry.
+     *
+     * @param $name The name of the photo
+     * @param $type The ending of the photo.
+     * @param $height The height of the photo.
+     * @param $width The width of the photo.
+     * @param $size The weight of the photo.
+     * @param $date The date of the upload.
+     * @param $userId The user id of the photo.
+     * @param string $title The title of the photo.
+     * @param string $description The description of the photo.
+     */
 	public function create($name, $type, $height, $width, $size, $date, $userId, $title = "", $description = "") {
 		$query = "INSERT INTO $this->tableName (name, type, height, width, size, date, title, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -28,6 +45,12 @@ class PhotoModel extends Model {
 		}
 	}
 
+    /**
+     * Read all rows by the user id.
+     *
+     * @param $userId The user id.
+     * @return array All the rows that contain the user id.
+     */
 	public function readAllByUserId($userId)
 	{
 		$query = "SELECT * FROM $this->tableName WHERE user_id=?";
@@ -48,7 +71,13 @@ class PhotoModel extends Model {
 
 		return $rows;
 	}
-	
+
+    /**
+     * Update the title of the photo.
+     *
+     * @param $title The new title.
+     * @param $id The id of the photo.
+     */
 	public function updateTitleById($title, $id)
 	{
 		$query = "UPDATE $this->tableName SET title =? WHERE id=?";
@@ -60,7 +89,13 @@ class PhotoModel extends Model {
 			throw new Exception ( $statement->error );
 		}
 	}
-	
+
+    /**
+     * Update the description of the photo.
+     *
+     * @param $description The new description.
+     * @param $id The id of the photo.
+     */
 	public function updateDescriptionById($description, $id)
 	{
 		$query = "UPDATE $this->tableName SET description =? WHERE id=?";
@@ -73,6 +108,13 @@ class PhotoModel extends Model {
 		}
 	}
 
+    /**
+     * Check if the photo is from the given user.
+     *
+     * @param $id The id of the photo.
+     * @param $userId The id of the user.
+     * @return bool True if the photo is from the user, false if not.
+     */
 	public function readIsPhotoFromUser($id, $userId) {
 		$query = "SELECT user_id FROM $this->tableName WHERE id=?";
 

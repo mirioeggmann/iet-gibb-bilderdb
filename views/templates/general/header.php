@@ -13,8 +13,15 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-
-<?php session_start(); ?>
+<?php
+require_once ('libraries/MySessionHandler.php');
+$mySessionHandler = new MySessionHandler();
+if($mySessionHandler->isUserLoggedIn()) {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+}
+?>
 <header>
     <div class="navbar-fixed">
         <ul id="dropdown1" class="dropdown-content">

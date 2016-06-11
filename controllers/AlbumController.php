@@ -13,22 +13,60 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('libraries/Controller.php');
+require_once ('Controller.php');
 
+/**
+ * All actions which include a single album are done in this controller.
+ */
 class AlbumController extends Controller
 {
+    /**
+     * Creates a custom header of the page.
+     */
     public function __construct()
     {
+        $mySessionHandler = new MySessionHandler();
+        if($mySessionHandler->isUserLoggedIn()) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
         $view = new View('general/head',array("title" => "Album - lychez.ch"));
         $view->display();
         $view = new View('general/header');
         $view->display();
     }
 
+    /**
+     * The single site with all photos of the album and a tag filter to search a photo.
+     *
+     * @param $id The selected album id.
+     * @throws Exception When the album doesn't exist.
+     */
     public function index($id)
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
+
+
+        if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $time = time();
+
+            $timeout_duration = 60;
+
+            if (isset($_SESSION['lastActivity']) && ($time - $_SESSION['lastActivity']) > $timeout_duration) {
+                session_unset();
+                setcookie(session_name(), "", 1);
+                setcookie(session_name(), false);
+                unset($_COOKIE[session_name()]);
+                session_destroy();
+                session_start();
+                header ( 'Location: /home' );
+            }
+            $_SESSION['lastActivity'] = $time;
+
+        } else {
+            header ( 'Location: /home' );
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
@@ -37,6 +75,7 @@ class AlbumController extends Controller
             $userModel = new UserModel();
             $albumModel = new AlbumModel();
             $tagModel = new TagModel();
+
 
             if ($albumModel->readIsAlbumFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
                 $photos = $photoAlbumModel->readAllPhotosByAlbumId($id);
@@ -110,6 +149,9 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Displays page where you can create a new album.
+     */
     public function create()
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -128,16 +170,20 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Takes the values of the create page and adds the new album.
+     */
     public function doCreate() {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
+            $validator = new Validator();
             if (isset ($_POST ['createAlbum'])) {
                 $formValues = $this->getFormValues();
 
-                if ($this->isFieldValid("/^[a-zA-Z0-9. ]{1,45}$/", $formValues['name'])) {
+                if ($validator->isValid("/^[a-zA-Z0-9. ]{1,45}$/", $formValues['name'])) {
                     $albumModel = new AlbumModel();
                     $userModel = new UserModel();
                     $id = $userModel->readIdByUsername($_SESSION['userName']);
@@ -155,6 +201,12 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Displays the page to edit an album.
+     *
+     * @param $id The id of the selected album.
+     * @throws Exception If the album does not exist
+     */
     public function edit($id) {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -181,6 +233,11 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Takes the values of the edit page and changes the values in the database.
+     *
+     * @param $id The id of the selected album.
+     */
     public function doEdit($id) {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -189,11 +246,12 @@ class AlbumController extends Controller
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $albumModel = new AlbumModel();
             $userModel = new UserModel();
+            $validator = new Validator();
             if ($albumModel->readIsAlbumFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
                 if (isset ($_POST ['editAlbum'])) {
                     $formValues = $this->getFormValues();
 
-                    if ($this->isFieldValid("/^[a-zA-Z0-9. ]{1,45}$/", $formValues['name'])) {
+                    if ($validator->isValid("/^[a-zA-Z0-9. ]{1,45}$/", $formValues['name'])) {
                         $albumModel->updateNameById($formValues['name'], $id);
 
                         header('Location: /album/index/' . $id);
@@ -211,6 +269,11 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Displays a page that asks if the user really wants to delete the album.
+     *
+     * @param $id The id of the album.
+     */
     public function delete($id) {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -237,6 +300,11 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * Is called when the user accepted to delete the album and this function deletes it in the database.
+     *
+     * @param $id The id of the album.
+     */
     public function doDelete($id) {
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $albumModel = new AlbumModel();
@@ -256,22 +324,15 @@ class AlbumController extends Controller
         }
     }
 
+    /**
+     * This method gets all form values and returns them as an array.
+     *
+     * @return array All album elements of a form.
+     */
     private function getFormValues() {
         $values = array (
             'name' => (isset ( $_POST ['name'] ) ? htmlspecialchars($_POST ['name']) : "")
         );
         return $values;
-    }
-
-    private function clearFormValues() {
-        $POST ['name'] = "";
-    }
-
-    private function isFieldValid($regex, $value) {
-        if (preg_match ( $regex, $value )) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

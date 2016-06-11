@@ -13,9 +13,19 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
+require_once ('Controller.php');
 
-class ErrorController
+/**
+ * Error Handling Controller
+ *
+ * Controller used by ErrorHandler to render error views.
+ */
+class ErrorController extends Controller
 {
+
+    /**
+     * Displays an error message.
+     */
     public function index() {
         $view = new View('errors/404');
         $view->display();

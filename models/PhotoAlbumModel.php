@@ -14,10 +14,23 @@
  */
 
 require_once ('libraries/Model.php');
+
+/**
+ * Handles all sql queries of the photo album table.
+ */
 class PhotoAlbumModel extends Model
 {
+    /**
+     * @var string Name of the table.
+     */
     protected $tableName = 'photo_album';
 
+    /**
+     * Create a new photo album entry
+     *
+     * @param $photoId The id of the photo
+     * @param $albumId The id of the album
+     */
     public function create($photoId, $albumId)
     {
         $query = "INSERT INTO $this->tableName (photo_id, album_id) VALUES (?, ?)";
@@ -30,6 +43,12 @@ class PhotoAlbumModel extends Model
         }
     }
 
+    /**
+     * Read all albums where the photo id is like the given one.
+     *
+     * @param $photoId The given photo id.
+     * @return array All albums that contain the given id.
+     */
     public function readAllAlbumsByPhotoId($photoId)
     {
         $query = "SELECT album.id AS id, album.name AS name FROM $this->tableName JOIN album ON album.id=photo_album.album_id AND photo_id=?";
@@ -51,6 +70,12 @@ class PhotoAlbumModel extends Model
         return $rows;
     }
 
+    /**
+     * Read all Photos where the album id is like the given one.
+     *
+     * @param $albumId The given album id.
+     * @return array All photos that contain the given id.
+     */
     public function readAllPhotosByAlbumId($albumId)
     {
         $query = "SELECT * FROM $this->tableName JOIN photo ON photo.id=photo_album.photo_id AND album_id=?";
@@ -72,6 +97,13 @@ class PhotoAlbumModel extends Model
         return $rows;
     }
 
+    /**
+     * Check if the the connection between the album and photo is setted.
+     *
+     * @param $albumId The album id.
+     * @param $photoId The photo id.
+     * @return bool True if the connection is already setted, otherwise false.
+     */
     public function readIsAlbumIdSettedByPhotoId($albumId, $photoId) {
         $query = "SELECT * FROM $this->tableName WHERE album_id=? AND photo_id=?";
 

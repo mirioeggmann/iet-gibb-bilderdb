@@ -13,9 +13,19 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/**
+ * Includes methods to validate different things.
+ */
 class Validator {
-    
-    public function isFieldValid($regex, $value) {
+
+    /**
+     * Validate a value with a regex and return if its valid or not.
+     *
+     * @param $regex The regex expression.
+     * @param $value The value which must be checked.
+     * @return bool True if it is valid, false if not.
+     */
+    public function isValid($regex, $value) {
         if (preg_match ( $regex, $value )) {
             return true;
         } else {

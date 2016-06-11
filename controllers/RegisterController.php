@@ -13,10 +13,16 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('models/UserModel.php');
+require_once ('Controller.php');
 
-class RegisterController {
-	
+/**
+ * Handles the registration of a new user.
+ */
+class RegisterController extends Controller{
+
+	/**
+	 * Displays a custom header.
+	 */
 	public function __construct() {
 		$view = new View ( 'general/head', array (
 				"title" => "Register - lychez.ch" 
@@ -25,14 +31,17 @@ class RegisterController {
 		$view = new View ( 'general/header' );
 		$view->display ();
 	}
-	
+
+	/**
+	 * Displays the registration form.
+	 */
 	public function index() {
 		if (session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
 
 		if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']) {
-			// Get the values of the Form.
+
 			$formValues = $this->getFormValues();
 
 			$view = new View ('general/main_start', array(
@@ -52,21 +61,23 @@ class RegisterController {
 			header ( 'Location: /home' );
 		}
 	}
-	
-	
+
+	/**
+	 * Performs the registration of a new user.
+	 */
 	public function doRegister() {
-		// Check if the submit button of the register form was pressed.
 		if (isset ( $_POST ['register'] )) {
 			session_start ();
-			// Get the values of the Form.
+            $validator = new Validator();
+
 			$formValues = $this->getFormValues ();
 			
-			$firstNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['firstName'] );
-			$lastNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['lastName'] );
-			$userNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['userName'] );
-			$emailValid = $this->isFieldValid ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] );
-			$passwordValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password'] );
-			$password2Valid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password2'] );
+			$firstNameValid = $validator->isValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['firstName'] );
+			$lastNameValid = $validator->isValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['lastName'] );
+			$userNameValid = $validator->isValid ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['userName'] );
+			$emailValid = $validator->isValid ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] );
+			$passwordValid = $validator->isValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password'] );
+			$password2Valid = $validator->isValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password2'] );
 			
 			if ($firstNameValid && $lastNameValid && $userNameValid && $emailValid && $passwordValid && $password2Valid) {
 				$userModel = new UserModel ();
@@ -85,9 +96,10 @@ class RegisterController {
 							session_start ();
 							session_regenerate_id();
 							$_SESSION ['userName'] = $formValues ['userName'];
+                            $_SESSION['lastActivity'] = time();
+                            $_SESSION['lastSessionUpdate'] = time();
 							$_SESSION ['loggedIn'] = true;
-							
-							// Clear the Form fields.
+
 							$this->clearFormValues ();
 							header ( 'Location: /photos' );
 						} else {
@@ -106,7 +118,10 @@ class RegisterController {
 			header ( 'Location: /register' );
 		}
 	}
-	
+
+    /**
+     * @return array All values of the registration form.
+     */
 	private function getFormValues() {
 		$values = array (
 				'firstName' => (isset ( $_POST ['firstName'] ) ? htmlspecialchars($_POST ['firstName']) : ""),
@@ -118,7 +133,10 @@ class RegisterController {
 		);
 		return $values;
 	}
-	
+
+    /**
+     * Clear the post values.
+     */
 	private function clearFormValues() {
 		$POST ['firstName'] = "";
 		$POST ['lastName'] = "";
@@ -126,20 +144,5 @@ class RegisterController {
 		$POST ['email'] = "";
 		$POST ['password'] = "";
 		$POST ['password2'] = "";
-	}
-	
-	private function isFieldValid($regex, $value) {
-		if (preg_match ( $regex, $value )) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public function __destruct() {
-		$view = new View ( 'general/footer' );
-		$view->display ();
-		$view = new View ( 'general/foot' );
-		$view->display ();
 	}
 }

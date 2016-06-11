@@ -13,11 +13,27 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/**
+ * Handles the creation of view. Displays the view parts.
+ */
 class View
 {
+    /**
+     * @var null|string The name of the view file.
+     */
     private $viewfile 	= null;
+
+    /**
+     * @var array Properties that are used by the view file.
+     */
     private $properties = array();
 
+    /**
+     * Adds the view file and properties if there are any given.
+     *
+     * @param $viewfile The name of the view file.
+     * @param array $properties the properties that are used by the view file.
+     */
     public function __construct($viewfile, $properties = array())
     {
     	$this->properties = $properties;
@@ -28,6 +44,12 @@ class View
 	    }
     }
 
+    /**
+     * Set a new property.
+     *
+     * @param $key Key of the property.
+     * @param $value Value of the property.
+     */
     public function __set($key, $value)
     {
         if (!isset($this->$key)) {
@@ -35,6 +57,12 @@ class View
         }
     }
 
+    /**
+     * Get a property.
+     *
+     * @param $key The key of the property.
+     * @return mixed The value of the property.
+     */
     public function __get($key)
     {
         if (isset($this->properties[$key])) {
@@ -42,6 +70,9 @@ class View
         }
     }
 
+    /**
+     * Call the viewfile and give it the properties.
+     */
     public function display()
     {
         extract($this->properties);

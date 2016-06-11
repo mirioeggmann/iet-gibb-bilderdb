@@ -13,14 +13,13 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-
 /**
- * Contains the configuration params for a db connection.
+ * Returns the configuration params for a db connection.
  */
 return array(
     'database' => array(
         'host'     => 'localhost',
-        'username' => 'root',
+        'username' => 'lychezUser',
         'password' => 'JMELab:443',
         'database' => 'lychez',
     ),

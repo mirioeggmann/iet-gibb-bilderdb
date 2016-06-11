@@ -13,27 +13,39 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('models/PhotoModel.php');
-require_once ('models/UserModel.php');
-require_once ('models/TagModel.php');
-require_once ('models/PhotoTagModel.php');
+require_once ('Controller.php');
 
-class PhotosController
+
+/**
+ * Handles all actions that include multiple photos.
+ */
+class PhotosController extends Controller
 {
+    /**
+     * Displays a custom header.
+     */
     public function __construct()
     {
+        $mySessionHandler = new MySessionHandler();
+        if($mySessionHandler->isUserLoggedIn()) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
+        
         $view = new View('general/head',array("title" => "Photos - lychez.ch"));
         $view->display();
         $view = new View('general/header');
         $view->display();
     }
 
+    /**
+     * Displays all photos of the current user.
+     */
     public function index()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
             $userModel = new UserModel();
             $photoModel = new PhotoModel();
@@ -103,13 +115,5 @@ class PhotosController
         } else {
             header ( 'Location: /home' );
         }
-    }
-
-    public function __destruct()
-    {
-        $view = new View('general/footer');
-        $view->display();
-        $view = new View('general/foot');
-        $view->display();
     }
 }

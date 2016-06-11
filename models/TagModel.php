@@ -14,10 +14,22 @@
  */
 
 require_once ('libraries/Model.php');
+
+/**
+ * Handles all queries of the tag table.
+ */
 class TagModel extends Model
 {
+    /**
+     * @var string The name of the table.
+     */
     protected $tableName = 'tag';
 
+    /**
+     * Create a new tag entry.
+     *
+     * @param $name The tag name.
+     */
     public function create($name)
     {
         $query = "INSERT INTO $this->tableName (name) VALUES (?)";
@@ -30,6 +42,12 @@ class TagModel extends Model
         }
     }
 
+    /**
+     * Read the id by the name.
+     *
+     * @param $name The tag name
+     * @return mixed Returns the id of a given name.
+     */
     public function readIdByName($name) {
         $query = "SELECT id FROM $this->tableName WHERE name=?";
         $statement = ConnectionHandler::getConnection ()->prepare ( $query );
@@ -45,6 +63,12 @@ class TagModel extends Model
         return $value;
     }
 
+    /**
+     * Checks if the tag is setted.
+     *
+     * @param $name The tag name.
+     * @return bool True if the tag is setted, false if not.
+     */
     public function readIsTagSetted($name) {
         $query = "SELECT * FROM $this->tableName WHERE name=?";
 
@@ -62,6 +86,11 @@ class TagModel extends Model
         }
     }
 
+    /**
+     * Read all tags.
+     *
+     * @return array All tags.
+     */
     public function readAllTags()
     {
         $query = "SELECT * FROM $this->tableName";

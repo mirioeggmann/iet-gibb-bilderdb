@@ -14,20 +14,18 @@
  */
 
 /**
- * Handles all requests by the user and leads it to the corresponding Controller.
- *
- *  @version    1.0.0
- *	@author		Mirio Eggmann <mirio.eggmann@protonmail.ch>
+ * Handles all requests by the user and leads it to the corresponding controller and calls the wished method.
  */
 class Dispatcher
 {
 	/**
-	 * Method that handles the requesteed data. Validates the controller and method names and displays them, if they are valid.
+	 * Method that handles the requesteed data. Validates the controller and method names and calls them, if they are valid.
 	 */
 	public static function dispatch()
 	{
 		/**
-		 * Controllernames and methods saved in an array. Is'ts kind of necessary to open
+		 * Controllernames and methods saved in an array. It's solved manually to prevent that too many ressources are used to
+		 * scan every controller if the method exists etc.
 		 */
 		$validControllerNames = array(	"Album"			=> array("index","create","doCreate", "edit", "doEdit", "delete", "doDelete"),
 									  	"Albums"		=> array("index"),
@@ -47,20 +45,22 @@ class Dispatcher
 
 		// controllername which is setted in the url.
 		if (!empty($url[0])) {
+
 			// controllername exists
 			if(array_key_exists(ucfirst($url[0]),$validControllerNames)) {
 				$controllerName = ucfirst($url[0]);
+
 				// Check if method exist and else call the index method of the controller.
 				if (!empty($url[1]) && in_array($url[1],$validControllerNames[$controllerName])) {}
 				$method 		= (!empty($url[1]) && in_array($url[1],$validControllerNames[$controllerName])) ? $url[1] : 'index';
 				$args 			= array_slice($url, 2);
-			  //controllername does not exist.
+
 			} else {
 				$controllerName = 'Error';
 				$method 		= 'index';
 				$args 			= array();
 			}
-			// If no controllername is setted in the url.
+
 		} else {
 			$controllerName = 'Home';
 			$method 		= 'index';
@@ -73,7 +73,7 @@ class Dispatcher
 		$controller = new $controllerName();
 		call_user_func_array(array($controller, $method), $args);
 
-		// Removes the useless Controllers and valid Controller to save resources
+		// Removes the useless Controllers and valid controller name array to save resources
 		unset($controller);
 		unset($validControllerNames);
 	}

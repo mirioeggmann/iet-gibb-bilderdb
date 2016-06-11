@@ -14,9 +14,24 @@
  */
 
 require_once ('libraries/Model.php');
+
+/**
+ * Handles all sql queries of the album table.
+ */
 class AlbumModel extends Model {
+
+    /**
+     * @var string The album table name.
+     */
     protected $tableName = 'album';
 
+    /**
+     * Creates a new album entry.
+     *
+     * @param $name string The name of the album
+     * @param $isShared int If the album is shared or not.
+     * @param $userId int The id of the user which it belongs to.
+     */
     public function create($name, $isShared, $userId) {
         $query = "INSERT INTO $this->tableName (name, isShared, user_id) VALUES (?, ?, ?)";
 
@@ -28,6 +43,12 @@ class AlbumModel extends Model {
         }
     }
 
+    /**
+     * Reads all albums of the user.
+     *
+     * @param $userId The id of the user.
+     * @return array All albums of the user.
+     */
     public function readAllByUserId($userId)
     {
         $query = "SELECT * FROM $this->tableName WHERE user_id=?";
@@ -49,6 +70,12 @@ class AlbumModel extends Model {
         return $rows;
     }
 
+    /**
+     * Update the album informations.
+     *
+     * @param $name The new name of the album
+     * @param $id The id of the album.
+     */
     public function updateNameById($name, $id)
     {
         $query = "UPDATE $this->tableName SET name=? WHERE id=?";
@@ -61,6 +88,13 @@ class AlbumModel extends Model {
         }
     }
 
+    /**
+     * Check if the album belongs to the given user.
+     *
+     * @param $id The id of the album.
+     * @param $userId The id of the user.
+     * @return bool True if it belongs to the user, false if not.
+     */
     public function readIsAlbumFromUser($id, $userId) {
         $query = "SELECT user_id FROM $this->tableName WHERE id=?";
 

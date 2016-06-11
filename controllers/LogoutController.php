@@ -13,48 +13,54 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-class LogoutController
+require_once ('Controller.php');
+
+/**
+ * Handles the logout prozess.
+ */
+class LogoutController extends Controller
 {
+    /**
+     * Displays a custom header.
+     */
 	public function __construct()
 	{
-    $view = new View('general/head',array("title" => "Logout - lychez.ch"));
+        $view = new View('general/head',array("title" => "Logout - lychez.ch"));
 		$view->display();
 		$view = new View('general/header');
 		$view->display();
 	}
 
-	public function index()
+    /**
+     * Directly calls the logout function.
+     */
+    public function index()
 	{
-    $this->doLogout();
+        $this->doLogout();
 	}
 
-  public function doLogout()
-  {
+    /**
+     * Performs the logout of the user.
+     */
+    public function doLogout()
+    {
 
-    // Initialize the session.
-    session_start();
+        // Initialize the session.
+        session_start();
 
-    // Remove all session variables.
-    session_unset();
+        // Remove all session variables.
+        session_unset();
 
-    // Snippet to delete session cookies properly - https://wwww.owasp.org/index.php/PHP_Security_Cheat_Sheet
-    // ----
-    setcookie(session_name(), "", 1);
-    setcookie(session_name(), false);
-    unset($_COOKIE[session_name()]);
-    // ----
+        // Snippet to delete session cookies properly - https://wwww.owasp.org/index.php/PHP_Security_Cheat_Sheet
+        // ----
+        setcookie(session_name(), "", 1);
+        setcookie(session_name(), false);
+        unset($_COOKIE[session_name()]);
+        // ----
 
-    //Destroy the session.
-    session_destroy();
+        //Destroy the session.
+        session_destroy();
 
-    header('Location: /home');
-  }
-
-	public function __destruct()
-	{
-    $view = new View('general/footer');
-		$view->display();
-		$view = new View('general/foot');
-		$view->display();
-	}
+        header('Location: /home');
+    }
 }

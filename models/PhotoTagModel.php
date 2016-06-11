@@ -14,10 +14,23 @@
  */
 
 require_once ('libraries/Model.php');
+
+/**
+ * Handle all the sql queries of the photo tag table.
+ */
 class PhotoTagModel extends Model
 {
+    /**
+     * @var string The name of the table.
+     */
     protected $tableName = 'photo_tag';
 
+    /**
+     * Create a new photo tag entry.
+     *
+     * @param $photoId The id of the photo.
+     * @param $tagId The id of the tag.
+     */
     public function create($photoId, $tagId)
     {
         $query = "INSERT INTO $this->tableName (photo_id, tag_id) VALUES (?, ?)";
@@ -30,6 +43,13 @@ class PhotoTagModel extends Model
         }
     }
 
+    /**
+     * Check if the photo tag connection is setted.
+     *
+     * @param $photoId The id of the photo.
+     * @param $tagId The id of the tag.
+     * @return bool True if the connection is setted, else false.
+     */
     public function readIsPhotoTagSetted($photoId, $tagId) {
         $query = "SELECT * FROM $this->tableName WHERE photo_id=? AND tag_id=?";
 
@@ -47,6 +67,12 @@ class PhotoTagModel extends Model
         }
     }
 
+    /**
+     * Read all tags where the photo id is correct.
+     *
+     * @param $photoId The id of the photo.
+     * @return array All Tags where the photo id is setted.
+     */
     public function readAllTagsByPhotoId($photoId)
     {
         $query = "SELECT tag.name AS name FROM $this->tableName JOIN tag ON tag.id=photo_tag.tag_id AND photo_id=?";

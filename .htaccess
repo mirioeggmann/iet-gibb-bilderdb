@@ -1,34 +1,29 @@
+##
+# Lychez : Image database (https://lychez.luvirx.io)
+# Copyright (c) luvirx (https://luvirx.io)
+#
+# Licensed under The MIT License
+# For the full copyright and license information, please see the LICENSE.md
+# Redistributions of the files must retain the above copyright notice.
+#
+# @link 		https://lychez.luvirx.io Lychez Project
+# @copyright 	Copyright (c) 2016 luvirx (https://luvirx.io)
+# @license		https://opensource.org/licenses/mit-license.php MIT License
+##
+
 # Handles all url based things.
 #
 # Rewrites the url that all requests go throught the index.php. It also prevents the server from disposing unwanted data in the filesystem.
 # Furter it throws custom exceptions, if an error occured.
-#
-#	@copyright		luvirx 2016
-#   @license		    https://github.com/luvirx/Lychez/blob/master/LICENSE.md
-#   @version     	1.0.0
-#   @author			Mirio Eggmann <mirio.eggmann@protonmail.ch>
 
 # Changes the request to always pass the index.php file instead.
 RewriteEngine On
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
-#RewriteRule ^img/.*$ albums [L,NC]
 RewriteRule ^.*$ index.php [PT,L]
 
 # Prevent showing unwanted data in filesytem
-Options -Indexes +FollowSymLinks -MultiViews
-#RewriteBase /
-#RewriteCond %{REQUEST_URI} !/theImages/.*
-#RewriteRule ^userHomes/([0-9]+)/photos/(.*)$ theImages/$1 [QSA,L]
-#RewriteRule ^userHomes/([0-9]{1,})/photos/([^.]+\.(?:jpg|jpeg|png)$ /files/photos?img=$1 [L,QSA]
-
-#Emaple
-#RewriteEngine On
-#RewriteRule ^folder/index.php?url=$1$ folder/index.php?url=older/([^.]+)\.(jpg|jpeg|png|bmp)C, L]
-#RewriteRule ^photosX/.* userHomes/1/photos/5750039b0c4aa_background_host%20(4th%20copy).png
-#RewriteRule ^tester test [NC,L]
+Options -Indexes
 
 # Custom error documents
 ErrorDocument 400 /index.php

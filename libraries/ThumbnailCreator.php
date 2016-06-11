@@ -13,7 +13,18 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
+/**
+ * Class that creates a thumnail of a given picture.
+ */
 class ThumbnailCreator {
+    
+    /**
+     * Creates a thumbnail of a picture with the real sizes but just smaller.
+     *
+     * @param $source Source of the original picture.
+     * @param $target Target of the thumbnail.
+     * @param int $maxWidthOrHeight Maximal width or height of the thumbnail.
+     */
     public function createThumbnail($source, $target, $maxWidthOrHeight = 100) {
         list ($width, $height, $type) = getimagesize ($source);
 

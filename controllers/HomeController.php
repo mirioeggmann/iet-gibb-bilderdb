@@ -13,8 +13,16 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-class HomeController
+require_once ('Controller.php');
+
+/**
+ * The default landig page of the website.
+ */
+class HomeController extends Controller
 {
+    /**
+     * Creates a custom header.
+     */
 	public function __construct()
 	{
 		$view = new View('general/head',array("title" => "Home - lychez.ch"));
@@ -23,6 +31,9 @@ class HomeController
 		$view->display();
 	}
 
+    /**
+     * Displays a welcome message or news.
+     */
 	public function index()
 	{
 		$view = new View('general/main_start', array("heading" => "Home"));
@@ -30,14 +41,6 @@ class HomeController
 		$view = new View('home/index');
 		$view->display();
 		$view = new View('general/main_end');
-		$view->display();
-	}
-
-	public function __destruct()
-	{
-		$view = new View('general/footer');
-		$view->display();
-		$view = new View('general/foot');
 		$view->display();
 	}
 }

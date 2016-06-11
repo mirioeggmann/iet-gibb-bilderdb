@@ -13,16 +13,26 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('models/UserModel.php');
+require_once ('Controller.php');
 
-class LoginController {
+/**
+ * The user login is handled by this controller.
+ */
+class LoginController extends Controller {
+
+    /**
+     * Creates a custom header.
+     */
 	public function __construct() {
 		$view = new View ( 'general/head', array (
 				"title" => "Login - lychez.ch"
 		) );
 		$view->display ();
 	}
-	
+
+    /**
+     * Displays the login form.
+     */
 	public function index() {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -43,7 +53,10 @@ class LoginController {
             header ( 'Location: /home' );
         }
 	}
-	
+
+    /**
+     * Takes the credentials of the login form and checks if they are in the database.
+     */
 	public function doLogin() {
 		if (isset ( $_POST ['login'] )) {
             if (session_status() == PHP_SESSION_NONE) {
@@ -59,6 +72,8 @@ class LoginController {
 						session_regenerate_id();
                         $id = (strpos($formValues['email'], '@') !== false ? $userModel->readIdByEmail($formValues['email']): $userModel->readIdByUsername($formValues['email']));
 						$_SESSION ['userName'] = $userModel->readUserNameById($id);
+                        $_SESSION['lastActivity'] = time();
+                        $_SESSION['lastSessionUpdate'] = time();
 						$_SESSION ['loggedIn'] = true;
 						
 						// Clear the Form fields.
@@ -75,7 +90,10 @@ class LoginController {
 			header ( 'Location: /login' );
 		}
 	}
-	
+
+    /**
+     * @return array All values of the login form.
+     */
 	private function getFormValues() {
 		$values = array (
 				'email' => (isset ( $_POST ['email'] ) ? $_POST ['email'] : ""),
@@ -83,20 +101,18 @@ class LoginController {
 		);
 		return $values;
 	}
-	
+
+    /**
+     * Clears the post values.
+     */
 	private function clearFormValues() {
 		$POST ['email'] = "";
 		$POST ['password'] = "";
 	}
-	
-	private function isFieldValid($regex, $value) {
-		if (preg_match ( $regex, $value )) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+
+    /**
+     * A custom footer for the login page.
+     */
 	public function __destruct() {
 		$view = new View ( 'general/foot' );
 		$view->display ();

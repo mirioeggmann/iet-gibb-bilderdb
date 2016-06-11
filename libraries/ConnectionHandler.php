@@ -20,11 +20,14 @@ class ConnectionHandler
 {
 	/**
 	 * Contains the MySQLi object if the connection is successfull.
+	 *
 	 * @var MySQLi|null
 	 */
 	private static $connection = null;
 
 	/**
+	 * Tries to connect to the database.
+	 *
 	 * @return MySQLi|null
 	 * @throws Exception When the connection fails.
 	 */

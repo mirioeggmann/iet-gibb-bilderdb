@@ -14,16 +14,27 @@
  */
 
 require_once ('libraries/ThumbnailCreator.php');
-require_once ('models/UserModel.php');
-require_once ('models/PhotoModel.php');
+require_once ('Controller.php');
 
-class UploadController
+/**
+ * Handles the upload of one or multiple pictures.
+ */
+class UploadController extends Controller
 {
     /**
      * Creates the header of the page.
      */
     public function __construct()
     {
+        $mySessionHandler = new MySessionHandler();
+        if($mySessionHandler->isUserLoggedIn()) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
+
         $view = new View ('general/head', array(
             "title" => "Upload - lychez.ch"
         ));
@@ -33,14 +44,10 @@ class UploadController
     }
 
     /**
-     * Default & startpage of the upload controller.
+     * Displays the uplaod form.
      */
     public function index()
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
         if (isset ($_SESSION ['loggedIn']) && $_SESSION ['loggedIn'] == true) {
             $view = new View ('general/main_start', array(
                 "heading" => "Upload"
@@ -115,16 +122,5 @@ class UploadController
                 header('Location: /upload');
             }
         }
-    }
-
-    /**
-     * Creates the footer of the page.
-     */
-    public function __destruct()
-    {
-        $view = new View ('general/footer');
-        $view->display();
-        $view = new View ('general/foot');
-        $view->display();
     }
 }

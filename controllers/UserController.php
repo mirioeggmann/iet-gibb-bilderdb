@@ -13,11 +13,27 @@
  * @license		https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once ('models/UserModel.php');
 require_once ('libraries/FileService.php');
+require_once ('Controller.php');
 
-class UserController {
+/**
+ * Handles the user informations once he is logged in.
+ */
+class UserController extends Controller{
+
+    /**
+     * Displays a custom header.
+     */
 	public function __construct() {
+        $mySessionHandler = new MySessionHandler();
+        if($mySessionHandler->isUserLoggedIn()) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+        } else {
+            header ( 'Location: /home' );
+        }
+
 		$view = new View ( 'general/head', array (
 				"title" => "User - lychez.ch" 
 		) );
@@ -25,11 +41,11 @@ class UserController {
 		$view = new View ( 'general/header' );
 		$view->display ();
 	}
-	public function index() {
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
 
+    /**
+     * Displays all informations about the user.
+     */
+	public function index() {
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 
 			$userModel = new UserModel();
@@ -50,11 +66,10 @@ class UserController {
 		}
 	}
 
+    /**
+     * Displays a edit form to edit the user.
+     */
 	public function edit() {
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
-
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 			$userModel = new UserModel();
 			$user = $userModel->readById($userModel->readIdByUsername($_SESSION['userName']));
@@ -74,20 +89,19 @@ class UserController {
 		}
 	}
 
+    /**
+     * Performs the edit of a user and inserts it in the database, if valid.
+     */
 	public function doEdit() {
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
-
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 			if (isset ( $_POST ['userEdit'] )) {
-				// Get the values of the Form.
 				$formValues = $this->getFormValues ();
+                $validator = new Validator();
 
-				$firstNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['firstName'] );
-				$lastNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['lastName'] );
-				$userNameValid = $this->isFieldValid ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['userName'] );
-				$emailValid = $this->isFieldValid ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] );
+				$firstNameValid = $validator->isValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['firstName'] );
+				$lastNameValid = $validator->isValid  ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['lastName'] );
+				$userNameValid = $validator->isValid  ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['userName'] );
+				$emailValid = $validator->isValid  ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] );
 
 				if ($firstNameValid && $lastNameValid && $userNameValid && $emailValid) {
 					$userModel = new UserModel ();
@@ -123,11 +137,10 @@ class UserController {
 
 	}
 
+    /**
+     * Displays a form to delete the active user.
+     */
 	public function delete() {
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
-
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 			$view = new View ( 'general/main_start', array (
 				"heading" => "User"
@@ -142,6 +155,9 @@ class UserController {
 		}
 	}
 
+    /**
+     * Performs the deletion if the user accepted the question.
+     */
 	public function doDelete() {
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 			$userModel = new UserModel();
@@ -154,10 +170,10 @@ class UserController {
 		}
 	}
 
+    /**
+     * Displays form to edit the password.
+     */
 	public function changepw() {
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
 
 		if (isset ( $_SESSION ['loggedIn'] ) && $_SESSION ['loggedIn'] == true) {
 
@@ -174,18 +190,18 @@ class UserController {
 		}
 	}
 
+    /**
+     * Changes the password of the active user if its valid.
+     */
 	public function doChangepw() {
 		if (isset ( $_POST ['userChangepw'] )) {
-
-			if (session_status() == PHP_SESSION_NONE) {
-				session_start();
-			}
+            $validator = new Validator();
 			$passwordOld = (isset($_POST ['passwordold'])? $_POST ['passwordold']: "" );
 			$passwordNew = (isset($_POST ['passwordnew'])? $_POST ['passwordnew']: "" );
 			$passwordNew2 = (isset($_POST ['passwordnew2'])? $_POST ['passwordnew2']: "" );
-			$passwordOldValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordOld);
-			$passwordNewValid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew) ;
-			$passwordNew2Valid = $this->isFieldValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew2);
+			$passwordOldValid = $validator->isValid  ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordOld);
+			$passwordNewValid = $validator->isValid  ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew) ;
+			$passwordNew2Valid = $validator->isValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $passwordNew2);
 
 			$userModel = new UserModel ();
 
@@ -211,6 +227,9 @@ class UserController {
 		}
 	}
 
+    /**
+     * @return array With all values of the user forms.
+     */
 	private function getFormValues() {
 		$values = array (
 			'firstName' => (isset ( $_POST ['firstName'] ) ? $_POST ['firstName'] : ""),
@@ -221,25 +240,13 @@ class UserController {
 		return $values;
 	}
 
+    /**
+     * Clear the post values.
+     */
 	private function clearFormValues() {
 		$POST ['firstName'] = "";
 		$POST ['lastName'] = "";
 		$POST ['userName'] = "";
 		$POST ['email'] = "";
-	}
-
-	private function isFieldValid($regex, $value) {
-		if (preg_match ( $regex, $value )) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function __destruct() {
-		$view = new View ( 'general/footer' );
-		$view->display ();
-		$view = new View ( 'general/foot' );
-		$view->display ();
 	}
 }
