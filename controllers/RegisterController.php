@@ -25,7 +25,7 @@ class RegisterController extends Controller{
 	 */
 	public function __construct() {
 		$view = new View ( 'general/head', array (
-				"title" => "Register - lychez.ch" 
+				"title" => "Register - lychez.ch"
 		) );
 		$view->display ();
 		$view = new View ( 'general/header' );
@@ -67,18 +67,20 @@ class RegisterController extends Controller{
 	 */
 	public function doRegister() {
 		if (isset ( $_POST ['register'] )) {
-			session_start ();
-            $validator = new Validator();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+      $validator = new Validator();
 
 			$formValues = $this->getFormValues ();
-			
+
 			$firstNameValid = $validator->isValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['firstName'] );
 			$lastNameValid = $validator->isValid ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['lastName'] );
 			$userNameValid = $validator->isValid ( "/^[a-zA-Z0-9.]{3,45}$/", $formValues ['userName'] );
 			$emailValid = $validator->isValid ( "/^[A-Z0-9\._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i", $formValues ['email'] );
 			$passwordValid = $validator->isValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password'] );
 			$password2Valid = $validator->isValid ( "/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/", $formValues ['password2'] );
-			
+
 			if ($firstNameValid && $lastNameValid && $userNameValid && $emailValid && $passwordValid && $password2Valid) {
 				$userModel = new UserModel ();
 				if (! $userModel->readIsEmailUsed( $formValues ['email'] )) {
@@ -93,7 +95,9 @@ class RegisterController extends Controller{
 							}
 
 							// Login the user.
-							session_start ();
+							if (session_status() == PHP_SESSION_NONE) {
+								session_start();
+							}
 							session_regenerate_id();
 							$_SESSION ['userName'] = $formValues ['userName'];
                             $_SESSION['lastActivity'] = time();

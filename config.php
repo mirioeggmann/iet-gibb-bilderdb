@@ -19,8 +19,8 @@
 return array(
     'database' => array(
         'host'     => 'localhost',
-        'username' => 'lychezUser',
-        'password' => 'JMELab:443',
+        'username' => 'root',
+        'password' => 'gibbiX12345',
         'database' => 'lychez',
     ),
 );

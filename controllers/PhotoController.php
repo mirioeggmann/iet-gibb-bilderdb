@@ -131,7 +131,7 @@ class PhotoController extends Controller
 
                 if ($photoModel->readIsPhotoFromUser($id,$userModel->readIdByUsername($_SESSION['userName']))) {
                     $descriptionValid = $validator->isValid ( "/^.{0,500}$/", $formValues ['description'] );
-                    $titleValid = $validator->isValid  ( "/^[a-zA-Z0-9.-]{0,45}$/", $formValues ['title'] );
+                    $titleValid = $validator->isValid  ( "/^[a-zA-Z0-9. -äöüÄÖÜ]{0,45}$/", $formValues ['title'] );
                     $tagsValid = $validator->isValid  ( "/^[a-zA-Z0-9, ]{0,}$/", $formValues ['tags'] );
                     if ($descriptionValid && $titleValid && $tagsValid) {
                         $photoModel->updateDescriptionById(htmlspecialchars($formValues['description']),$id);
